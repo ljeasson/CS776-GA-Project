@@ -1,0 +1,16 @@
+^PACKAGE
+NOTES.txt
+bootstrap
+COPYING
+LICENSE
+.travis.yml
+src/install.lib.R
+ANNOUNCEMENT
+AUTHORS
+deprecated
+^.*\.Rproj$
+^\.Rproj\.user$
+^.*\.tar\.gz$
+local
+^docs
+^docs-src
