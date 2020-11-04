@@ -9,7 +9,12 @@
 #include <iostream>
 #include <fstream>
 #include <GA.h>
+
+#include "Rinternals.h"
+#include "Rembedded.h"
+
 using namespace std;
+//using namespace Rcpp;
 
 int main(int argc, char *argv[]) {
 	cout << "Tree Segmentation GA" << endl;
