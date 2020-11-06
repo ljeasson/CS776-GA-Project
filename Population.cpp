@@ -93,9 +93,9 @@ void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, 
 		c1->chromosome[i] = p1->chromosome[i];
 		c2->chromosome[i] = p2->chromosome[i];
 	}
-	if(Flip(options.px)){ // if prob, then cross/exchange bits
-		OnePoint(p1, p2, c1, c2);
-	}
+	//if(Flip(options.px)){ // if prob, then cross/exchange bits
+	//	OnePoint(p1, p2, c1, c2);
+	//}
 
 	c1->Mutate(options.pm);
 	c2->Mutate(options.pm);

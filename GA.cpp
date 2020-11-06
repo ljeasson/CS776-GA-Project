@@ -7,12 +7,11 @@
 
 #include "GA.h"
 #include <string>
-#include<iostream>
+#include <iostream>
 
-GA::GA(int argc, char *argv[]) {
-	SetupOptions(argc, argv);
+GA::GA(int argc, char *argv[], int randomSeed) {
+	SetupOptions(argc, argv, randomSeed);
 	srandom(options.randomSeed);
-
 }
 
 GA::~GA() {
@@ -20,8 +19,8 @@ GA::~GA() {
 }
 
 
-void GA::SetupOptions(int argc, char *argv[]){
-	options.randomSeed = 121;
+void GA::SetupOptions(int argc, char *argv[], int randomSeed){
+	options.randomSeed = randomSeed;
 	options.popSize = 30;
 	options.chromLength = 10;
 	options.maxgens = 60;
@@ -37,7 +36,6 @@ void GA::Init(){
 	parent->Init(); // evaluates, stats, and reports on initial population
 	parent->Statistics();
 	parent->Report(0);
-
 }
 
 void GA::Run(){
@@ -52,6 +50,5 @@ void GA::Run(){
 		parent = child;
 		child = tmp;
 	}
-
 }
 

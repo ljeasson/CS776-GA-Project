@@ -8,13 +8,20 @@
 
 #include <iostream>
 #include <fstream>
+#include <Utils.h>
 #include <GA.h>
+
 using namespace std;
 
 int main(int argc, char *argv[]) {
-	cout << "Simple genetic algorithm" << endl; // prints Simple genetic algorithm
 
-	GA ga = GA(argc, argv);
+	int low = 1;
+	int high = 1000;
+	int randomSeed = 1;
+	srand(time(NULL));
+
+	randomSeed = IntInRange(low, high); //rand() % ( high - low + 1 ) + low;
+	GA ga = GA(argc, argv, randomSeed);
 
 	ga.Init();
 	ga.Run();

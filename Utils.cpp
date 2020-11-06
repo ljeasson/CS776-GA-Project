@@ -5,10 +5,10 @@
  *      Author: sushil
  */
 
-#include<Utils.h>
-#include<iostream>
-#include<fstream>
-#include<string>
+#include <Utils.h>
+#include <iostream>
+#include <fstream>
+#include <string>
 
 void WriteBufToFile(std::string buf, std::string filename){
 	std::ofstream ofs(filename, std::ofstream::app);
@@ -30,7 +30,10 @@ int IntInRange(int low, int high){
 	return low + random()%(high - low);
 }
 
-
+double DoubleInRange(double low, double high){
+    double f = (double)rand() / RAND_MAX;
+    return low + f * (high - low);
+}
 
 /* greater than equal to 0 and less than 1 */
 float RandomFraction(){

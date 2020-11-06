@@ -17,7 +17,7 @@ private:
 	void Construct();
 
 public:
-	GA(int argc, char *argv[]);
+	GA(int argc, char *argv[], int randomSeed);
 
 	virtual ~GA();
 
@@ -27,7 +27,7 @@ public:
 	Options options;
 
 
-	void SetupOptions(int argc, char*argv[]);
+	void SetupOptions(int argc, char*argv[], int randomSeed);
 
 	void Init();
 	void Run();
