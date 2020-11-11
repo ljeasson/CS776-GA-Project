@@ -22,7 +22,7 @@ GA::~GA() {
 void GA::SetupOptions(int argc, char *argv[], int randomSeed){
 	options.randomSeed = randomSeed;
 	options.popSize = 30;
-	options.chromLength = 10;
+	options.chromLength = 17;
 	options.maxgens = 60;
 	options.px = 0.7f;
 	options.pm = 0.001f;

@@ -88,17 +88,26 @@ int Population::ProportionalSelector(){
 }
 
 void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
-
-	for(int i = 0; i < options.chromLength; i++){ //First copy
+	// Copy parents to children
+	for(int i = 0; i < options.chromLength; i++){ 
 		c1->chromosome[i] = p1->chromosome[i];
 		c2->chromosome[i] = p2->chromosome[i];
 	}
-	//if(Flip(options.px)){ // if prob, then cross/exchange bits
-	//	OnePoint(p1, p2, c1, c2);
-	//}
-
+	// If xover prob, cross/exchange bits
+	if(Flip(options.px)){ 
+		Xover(p1, p2, c1, c2);
+	}
+	// If mutate prob, mutate bits
 	c1->Mutate(options.pm);
 	c2->Mutate(options.pm);
+}
+
+void Population::XoverOnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
+
+}
+
+void Population::XoverTwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
+
 }
 
 void Population::OnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){ //not debugged

@@ -2,11 +2,17 @@
 # Call this function per eval()
 # CHROMOSOME: ALG, P1, P2, P3, ... Pn
 
-
 library(lidR)
-las = readLAS("D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30.las")
-args = commandArgs(trailingOnly = TRUE)
+library(raster)
+#library(EBImage)
+
+las <- readLAS("D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30.las")
+CHM = raster("D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30_CHM.tif")
+TREETOPS = find_trees(las, lmf(5))
+
+args <-commandArgs(trailingOnly = TRUE)
 alg <- as.integer(args[1])
+alg = 0
 
 #dalponte2016(
 #  chm,  [grid_canopy() or read external file]
@@ -22,12 +28,12 @@ if (alg == 0) {
   cat("dalponte2016(", as.character(args[2]), ", ", as.character(args[3]), ", th_tree = ", as.character(args[4]), ", th_seed = ", as.character(args[5]), ", th_cr = ", as.character(args[6]), ", max_cr = ", as.character(args[7]), ", ID = 'treeID')")
   
   las = segment_trees(las, dalponte2016(
-    chm = as.double(args[2]), # Get CHM with grid_canopy()
-    treetops = as.double(args[3]), # Get treetops with find_trees()
-    th_tree = as.double(args[4]),
-    th_seed = as.double(args[5]),
-    th_cr = as.double(args[6]),
-    max_cr = as.double(args[7]) ))
+    chm = CHM, 
+    treetops = TREETOPS, 
+    th_tree = as.double(args[2]),
+    th_seed = as.double(args[3]),
+    th_cr = as.double(args[4]),
+    max_cr = as.double(args[5]) ))
 }
 
 # watershed(chm, th_tree = 2, tol = 1, ext = 1)
@@ -36,10 +42,10 @@ if (alg == 1) {
   cat("watershed(", as.character(args[2]), ", th_tree = ", as.character(args[3]), ", tol = ", as.character(args[4]), ", ext = ", as.character(args[5]),")")
   
   las = segment_trees(las, watershed(
-    chm = as.double(args[2]), # Get CHM with grid_canopy()
-    th_tree = as.double(args[3]),
-    tol = as.double(args[4]),
-    ext = as.double(args[5]) ))
+    chm = CHM,
+    th_tree = as.double(args[2]),
+    tol = as.double(args[3]),
+    ext = as.double(args[4]) ))
 }
 
 # mcwatershed(chm, treetops, th_tree = 2, ID = "treeID")
@@ -48,8 +54,8 @@ if (alg == 2) {
   cat("mcwatershed(", as.character(args[2]), ", treetops = ", as.character(args[3]), ", th_tree = ", as.character(args[4]), ")")
   
   las = segment_trees(las, watershed(
-    chm = as.double(args[2]), # Get CHM with grid_canopy()
-    treetops = as.double(args[3]),
+    chm = CHM,
+    treetops = TREETOPS,
     th_tree = as.double(args[4]) ))
 }
 
@@ -74,8 +80,8 @@ if (alg == 4) {
   cat("silva2016(", as.character(args[2]), ", treetops = ", as.character(args[3]), ", max_cr_factor = ", as.character(args[4]), ", exclusion = ", as.character(args[5]), ")")
   
   las = segment_trees(las, watershed(
-    chm = as.double(args[2]), # Get CHM with grid_canopy()
-    treetops = as.double(args[3]), # Get treetops with find_trees()
+    chm = CHM,
+    treetops = TREETOPS,
     max_cr_factor = as.double(args[4]),
     exclusion = as.double(args[5]) ))
 }

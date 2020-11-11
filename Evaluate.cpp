@@ -14,6 +14,8 @@ using namespace std;
 
 double Eval(Individual *individual){
 	double sum = 0;
+	double sumPA = 0; double modelSum = 0;
+	
 	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/treeSeg.R ";
 	
 	cout << "Chromosome: ";
@@ -27,7 +29,12 @@ double Eval(Individual *individual){
 	cout << command << endl;
 	const char * com = command.c_str();
 	system(com);
-	//system("Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/treeSeg.R 3 1.5 2 2 15 2 10");
+
+	// Minimize: presence/absence difference (primary)
+	// Minimize: height difference (secondary)
+
+	// Individual: tree or LAS file?
+	
 	cout << endl << endl;
 	return sum;
 }

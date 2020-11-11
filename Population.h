@@ -31,9 +31,13 @@ public:
 
 	int ProportionalSelector();
 	void XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
-	void TwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
+	
+	void XoverOnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
+	void XoverTwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
+	
 	void OnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
-
+	void TwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
+	
 };
 
 #endif /* POPULATION_H_ */

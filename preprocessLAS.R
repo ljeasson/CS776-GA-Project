@@ -1,7 +1,9 @@
-options("rgdal_show_exportToProj4_warnings"="none")
 
 library(lidR)
+
+options("rgdal_show_exportToProj4_warnings"="none")
 library(rgdal)
+
 #library(EBImage)
 
 # Read in LAS, classify and normalize
@@ -67,6 +69,11 @@ getShapeFile <- function(las, chm, plotName = "shape.png") {
 
 }
 
-las = processLAS(pointCloud = "D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30.las")
-chm = canopyHeight(las, plotName = "plot1.png")
+
+las <- readLAS("D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30.las")
+chm = grid_canopy(las, 0.5, pitfree(c(0,2,5,10,15), c(0,1), subcircle = 0.2))
+writeRaster(chm, "D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30_CHM.tif", overwrite = TRUE)
+
+#las = processLAS(pointCloud = "D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30.las")
+#chm = canopyHeight(las, plotName = "D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30_CHM.png")
 #getShapeFile(las, chm, plotName = "plot1_shape.png")
