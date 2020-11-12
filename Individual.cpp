@@ -75,10 +75,10 @@ void Individual::Init(){
 	chromosome[3] = IntInRange(1,5); // th_tree
 	chromosome[4] = DoubleInRange(0.0,1.0); // th_seed
 	chromosome[5] = DoubleInRange(0.0,1.0); // th_cr
-	chromosome[6] = InInRange(1,20); // max_cr
+	chromosome[6] = IntInRange(1,20); // max_cr
 
-	chromosome[7] = InInRange(1,10); // tol
-	chromosome[8] = InInRange(1,10); // ext
+	chromosome[7] = IntInRange(1,10); // tol
+	chromosome[8] = IntInRange(1,10); // ext
 
 	chromosome[9] = DoubleInRange(1,10); // dt1
 	chromosome[10] = DoubleInRange(1,10); // dt2
@@ -116,13 +116,13 @@ void Individual::Mutate(double pm){
 					chromosome[5] = DoubleInRange(0.0,1.0); // th_cr
 					break;
 				case 6:
-					chromosome[6] = InInRange(1,20); // max_cr
+					chromosome[6] = IntInRange(1,20); // max_cr
 					break;
 				case 7:
-					chromosome[7] = InInRange(1,10); // tol
+					chromosome[7] = IntInRange(1,10); // tol
 					break;
 				case 8:
-					chromosome[8] = InInRange(1,10); // ext
+					chromosome[8] = IntInRange(1,10); // ext
 					break;
 				case 9:
 					chromosome[9] = DoubleInRange(1,10); // dt1

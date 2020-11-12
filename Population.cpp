@@ -57,6 +57,7 @@ void Population::Report(unsigned long int gen){
 }
 
 void Population::Generation(Population *child){
+	/*
 	int pi1, pi2, ci1, ci2;
 	Individual *p1, *p2, *c1, *c2;
 	for(int i = 0; i < options.popSize; i += 2){
@@ -70,8 +71,77 @@ void Population::Generation(Population *child){
 		c1 = child->members[ci1]; c2 = child->members[ci2];
 
 		XoverAndMutate(p1, p2, c1, c2);
+	}*/
+
+	// CHC SELECTION
+	// For all members in parent population
+	// Get 2 parents and produce 2 children using crossover and mutation
+	int pi1, pi2, range1, range2;
+	Individual *p1, *p2, *c1, *c2;
+	for(int i = 0; i < options.popSize; i += 2){
+		pi1 = IntInRange(0,options.popSize-1); 
+		pi2 = IntInRange(0,options.popSize-1);
+		
+		p1 = members[pi1]; p2 = members[pi2];
+		c1 = child->members[i]; c2 = child->members[i+1];
+		XoverAndMutate(p1, p2, c1, c2);
+	}
+	
+	// Competition between parent and child population
+	for (int i = 0; i < options.popSize; i++){
+	
+		// If parent fitness at index is greater, assign to child fitness at index
+		// otherwise, leave as is
+		if (members[i]->fitness > child->members[i]->fitness){
+			child->members[i]->fitness = members[i]->fitness;			
+		}
 	}
 }
+
+void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
+	// Copy parents to children
+	for(int i = 0; i < options.chromLength; i++){ 
+		c1->chromosome[i] = p1->chromosome[i];
+		c2->chromosome[i] = p2->chromosome[i];
+	}
+	// If xover prob, cross/exchange bits
+	if(Flip(options.px))
+		XoverOnePoint(p1, p2, c1, c2);
+	
+	// If mutate prob, mutate bits
+	c1->Mutate(options.pm);
+	c2->Mutate(options.pm);
+}
+
+void Population::XoverOnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
+	// Exchange algorithm bit
+	c1->chromosome[0] = p2->chromosome[0];
+	c2->chromosome[0] = p1->chromosome[0];
+	
+	// Exchange parameter bits
+	int t1 = IntInRange(1, options.chromLength);
+	for(int i = t1; i < options.chromLength; i++){
+		c1->chromosome[i] = p2->chromosome[i];
+		c2->chromosome[i] = p1->chromosome[i];
+	}
+}
+
+void Population::XoverTwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
+	// Exchange algorithm bit
+	c1->chromosome[0] = p2->chromosome[0];
+	c2->chromosome[0] = p1->chromosome[0];
+
+	// Exchange parameter bits
+	int t1 = IntInRange(1, options.chromLength);
+	int t2 = IntInRange(1, options.chromLength);
+	int xp1 = std::min(t1, t2);
+	int xp2 = std::max(t1, t2);
+	for(int i = xp1; i < xp2; i++){
+		c1->chromosome[i] = p2->chromosome[i];
+		c2->chromosome[i] = p1->chromosome[i];
+	}
+}
+
 
 
 
@@ -85,29 +155,6 @@ int Population::ProportionalSelector(){
 	} while (sum < limit && i < options.popSize-1 );
 
 	return i;
-}
-
-void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
-	// Copy parents to children
-	for(int i = 0; i < options.chromLength; i++){ 
-		c1->chromosome[i] = p1->chromosome[i];
-		c2->chromosome[i] = p2->chromosome[i];
-	}
-	// If xover prob, cross/exchange bits
-	if(Flip(options.px)){ 
-		Xover(p1, p2, c1, c2);
-	}
-	// If mutate prob, mutate bits
-	c1->Mutate(options.pm);
-	c2->Mutate(options.pm);
-}
-
-void Population::XoverOnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
-
-}
-
-void Population::XoverTwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
-
 }
 
 void Population::OnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){ //not debugged
