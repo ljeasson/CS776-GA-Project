@@ -65,30 +65,29 @@ void Individual::Init(){
 	)
 	
 	CHROMOSOME: 
-	[alg, chm, treetops, th_tree, th_seed, th_cr, max_cr, tol, ext, dt1, dt2, R, Zu, hmin, speed_up, max_cr_factor, exclusion]
+	[alg, chm, treetops, th_tree, th_seed, th_cr, max_cr, tol, ext, 
+	 dt1, dt2, R, Zu, hmin, speed_up, max_cr_factor, exclusion]
 	*/
 	
-	chromosome[0] = IntInRange(0,4); // alg
-	chromosome[1] = 0; // chm (CHANGE)
-	chromosome[2] = 0; // treetops (CHANGE)
+	chromosome[0] = IntInRange(0,3); // alg
 	
-	chromosome[3] = IntInRange(1,5); // th_tree
-	chromosome[4] = DoubleInRange(0.0,1.0); // th_seed
-	chromosome[5] = DoubleInRange(0.0,1.0); // th_cr
-	chromosome[6] = IntInRange(1,20); // max_cr
+	chromosome[1] = IntInRange(1,5); // th_tree
+	chromosome[2] = DoubleInRange(0.0,1.0); // th_seed
+	chromosome[3] = DoubleInRange(0.0,1.0); // th_cr
+	chromosome[4] = IntInRange(1,20); // max_cr
 
-	chromosome[7] = IntInRange(1,10); // tol
-	chromosome[8] = IntInRange(1,10); // ext
+	chromosome[5] = IntInRange(1,10); // tol
+	chromosome[6] = IntInRange(1,10); // ext
 
-	chromosome[9] = DoubleInRange(1,10); // dt1
-	chromosome[10] = DoubleInRange(1,10); // dt2
-	chromosome[11] = DoubleInRange(0,20); // R (search radius)
-	chromosome[12] = DoubleInRange(10,30); // Zu
-	chromosome[13] = DoubleInRange(1,100); // hmin
-	chromosome[14] = DoubleInRange(1,100); // speed_up
+	chromosome[7] = DoubleInRange(1,10); // dt1
+	chromosome[8] = DoubleInRange(1,10); // dt2
+	chromosome[9] = DoubleInRange(0,20); // R (search radius)
+	chromosome[10] = DoubleInRange(10,30); // Zu
+	chromosome[11] = DoubleInRange(1,100); // hmin
+	chromosome[12] = DoubleInRange(1,100); // speed_up
 
-	chromosome[15] = DoubleInRange(0,1); // max_cr_factor
-	chromosome[16] = DoubleInRange(0,1); // exclusion
+	chromosome[13] = DoubleInRange(0,1); // max_cr_factor
+	chromosome[14] = DoubleInRange(0,1); // exclusion
 
 }
 
@@ -97,56 +96,55 @@ void Individual::Mutate(double pm){
 	//	if(Flip(pm))
 	//		chromosome[i] = 1 - chromosome[i];
 	//}
-	
-	// Mutate algorithm (0-4)
-	if (Flip(pm))
-		chromosome[0] = IntInRange(0,4); // alg
-	
+		
 	// Mutate parameters
-	for(int i = 3; i < chromLength; i++){
+	for(int i = 0; i < chromLength; i++){
 		if(Flip(pm)){
 			switch (i){
+				case 0:
+					chromosome[0] = IntInRange(0,4); // alg
+					break;
+				case 1:
+					chromosome[1] = IntInRange(1,5); // th_tree
+					break;
+				case 2:
+					chromosome[2] = DoubleInRange(0.0,1.0); // th_seed
+					break;
 				case 3:
-					chromosome[3] = IntInRange(1,5); // th_tree
+					chromosome[3] = DoubleInRange(0.0,1.0); // th_cr
 					break;
 				case 4:
-					chromosome[4] = DoubleInRange(0.0,1.0); // th_seed
+					chromosome[4] = IntInRange(1,20); // max_cr
 					break;
 				case 5:
-					chromosome[5] = DoubleInRange(0.0,1.0); // th_cr
+					chromosome[5] = IntInRange(1,10); // tol
 					break;
 				case 6:
-					chromosome[6] = IntInRange(1,20); // max_cr
+					chromosome[6] = IntInRange(1,10); // ext
 					break;
 				case 7:
-					chromosome[7] = IntInRange(1,10); // tol
+					chromosome[7] = DoubleInRange(1,10); // dt1
 					break;
 				case 8:
-					chromosome[8] = IntInRange(1,10); // ext
+					chromosome[8] = DoubleInRange(1,10); // dt2
 					break;
 				case 9:
-					chromosome[9] = DoubleInRange(1,10); // dt1
+					chromosome[9] = DoubleInRange(0,20); // R (search radius)
 					break;
 				case 10:
-					chromosome[10] = DoubleInRange(1,10); // dt2
+					chromosome[10] = DoubleInRange(10,30); // Zu
 					break;
 				case 11:
-					chromosome[11] = DoubleInRange(0,20); // R (search radius)
+					chromosome[11] = DoubleInRange(1,100); // hmin
 					break;
 				case 12:
-					chromosome[12] = DoubleInRange(10,30); // Zu
+					chromosome[12] = DoubleInRange(1,100); // speed_up
 					break;
 				case 13:
-					chromosome[13] = DoubleInRange(1,100); // hmin
+					chromosome[13] = DoubleInRange(0,1); // max_cr_factor
 					break;
 				case 14:
-					chromosome[14] = DoubleInRange(1,100); // speed_up
-					break;
-				case 15:
-					chromosome[15] = DoubleInRange(0,1); // max_cr_factor
-					break;
-				case 16:
-					chromosome[16] = DoubleInRange(0,1); // exclusion
+					chromosome[14] = DoubleInRange(0,1); // exclusion
 					break;
 			}
 		}

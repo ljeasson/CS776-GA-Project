@@ -15,7 +15,6 @@ using namespace std;
 double Eval(Individual *individual){
 	double sum = 0;
 	double sumPA = 0; double modelSum = 0;
-	
 	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/treeSeg.R ";
 	
 	cout << "Chromosome: ";

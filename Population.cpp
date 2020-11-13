@@ -113,13 +113,9 @@ void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, 
 	c2->Mutate(options.pm);
 }
 
-void Population::XoverOnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
-	// Exchange algorithm bit
-	c1->chromosome[0] = p2->chromosome[0];
-	c2->chromosome[0] = p1->chromosome[0];
-	
-	// Exchange parameter bits
-	int t1 = IntInRange(1, options.chromLength);
+void Population::XoverOnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){	
+	// Exchange algorithm and parameter bits
+	int t1 = IntInRange(0, options.chromLength);
 	for(int i = t1; i < options.chromLength; i++){
 		c1->chromosome[i] = p2->chromosome[i];
 		c2->chromosome[i] = p1->chromosome[i];
@@ -132,11 +128,8 @@ void Population::XoverTwoPoint(Individual *p1, Individual *p2, Individual *c1, I
 	c2->chromosome[0] = p1->chromosome[0];
 
 	// Exchange parameter bits
-	int t1 = IntInRange(1, options.chromLength);
-	int t2 = IntInRange(1, options.chromLength);
-	int xp1 = std::min(t1, t2);
-	int xp2 = std::max(t1, t2);
-	for(int i = xp1; i < xp2; i++){
+	int t1 = IntInRange(0, options.chromLength);
+	for(int i = t1; i < options.chromLength; i++){
 		c1->chromosome[i] = p2->chromosome[i];
 		c2->chromosome[i] = p1->chromosome[i];
 	}

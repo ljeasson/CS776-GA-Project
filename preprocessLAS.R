@@ -4,7 +4,9 @@ library(lidR)
 options("rgdal_show_exportToProj4_warnings"="none")
 library(rgdal)
 
-#library(EBImage)
+#install.packages("BiocManager") 
+#BiocManager::install("EBImage")
+library(EBImage)
 
 # Read in LAS, classify and normalize
 processLAS <- function(pointCloud, plot = FALSE) {
@@ -47,9 +49,10 @@ canopyHeight <- function(las, smooth = TRUE, plotName = "plot.png", plot = TRUE)
 }
 
 # Get shape file
-getShapeFile <- function(las, chm, plotName = "shape.png") {
+getShapeFile <- function(las, chm) {
   
   #algo = watershed(chm, th = 4)
+  algo = watershed(chm)
   las  = lastrees(las, algo)
   
   # Remove points that are not assigned to a tree
@@ -61,19 +64,28 @@ getShapeFile <- function(las, chm, plotName = "shape.png") {
   hulls  = tree_hulls(las)
   hulls@data = dplyr::left_join(hulls@data, metric@data)
   #png(plotName)
-  spplot(hulls, "Z")
+  #spplot(hulls, "Z")
   #dev.off();
   
   # Write to shapefile in equal area projection
-  writeOGR(obj=hulls, dsn="C:/Users/Lee/Documents/", layer="hulls", driver="ESRI Shapefile")
+  writeOGR(obj=hulls, dsn="D:/PointClouds/ferguson/registered/postfire_als_clip", layer="hulls", driver="ESRI Shapefile")
 
 }
-
-
-las <- readLAS("D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30.las")
-chm = grid_canopy(las, 0.5, pitfree(c(0,2,5,10,15), c(0,1), subcircle = 0.2))
-writeRaster(chm, "D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30_CHM.tif", overwrite = TRUE)
 
 #las = processLAS(pointCloud = "D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30.las")
 #chm = canopyHeight(las, plotName = "D:/PointClouds/ferguson/registered/postfire_als_clip/fergusonfire_20180916_TLS_0401_20180822_01_clipped_30_CHM.png")
 #getShapeFile(las, chm, plotName = "plot1_shape.png")
+
+
+
+# Read point cloud
+las = readLAS("D:/PointClouds/for_lee/clipped_als/001_clipped_30.las")
+
+# Classify ground points
+las = lasground(las, csf())
+
+# Normalize points
+las = lasnormalize(las, tin())
+
+# Save point cloud
+writeLAS(las, "D:/PointClouds/for_lee/clipped_als/001_clipped_30.las")
