@@ -8,10 +8,12 @@
 #ifndef EVALUATE_H_
 #define EVALUATE_H_
 
-#include <Individual.h>
-#include <Options.h>
+#include "Individual.h"
+#include "Options.h"
 
 double Eval(Individual *individual);
+
+//void EvalInit(Options options);
 
 
 #endif /* EVALUATE_H_ */

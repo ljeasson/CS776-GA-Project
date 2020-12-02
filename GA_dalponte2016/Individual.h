@@ -10,6 +10,8 @@
 
 #include <Const.h>
 
+#include <string>
+
 class Individual {
 public:
 	Individual(int chromLen);
@@ -20,7 +22,7 @@ public:
 	double fitness;
 
 	void Init();
-	void Mutate(double pm);
+	void Mutate(float pm);
 
 	std::string ToString();
 };

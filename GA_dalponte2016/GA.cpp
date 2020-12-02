@@ -6,12 +6,15 @@
  */
 
 #include "GA.h"
+#include "Utils.h"
+#include "Evaluate.h"
+
 #include <string>
-#include <iostream>
+#include<iostream>
 
 GA::GA(int argc, char *argv[], int randomSeed) {
 	SetupOptions(argc, argv, randomSeed);
-	srandom(options.randomSeed);
+	InitializeRandomNumberGenerator(options.randomSeed);
 }
 
 GA::~GA() {
@@ -21,26 +24,28 @@ GA::~GA() {
 
 void GA::SetupOptions(int argc, char *argv[], int randomSeed){
 	options.randomSeed = randomSeed;
-	options.popSize = 50;
-	options.chromLength = 15;
-	options.maxgens = 100;
+	options.popSize = 30;
+	options.chromLength = 4;
+	options.maxgens = 45;
 	options.px = 0.95f;
 	options.pm = 0.05f;
 	options.infile = std::string ("infile");
 	options.outfile = std::string("outfile");
+	//options.graphInfile = std::string("graph-raw.csv");
 }
 
 void GA::Init(){
+	//EvalInit(options);
 	parent = new Population(options);
 	child  = new Population(options);
 	parent->Init(); // evaluates, stats, and reports on initial population
 	parent->Statistics();
 	parent->Report(0);
+
 }
 
 void GA::Run(){
-
-	for(unsigned long int i = 1; i < options.maxgens; i++){
+	for (unsigned long int i = 1; i < options.maxgens; i++) {
 		parent->Generation(child);
 		child->Evaluate();
 		child->Statistics();
@@ -50,6 +55,7 @@ void GA::Run(){
 		parent = child;
 		child = tmp;
 	}
+
 }
 
 void GA::CHCRun() {
@@ -63,3 +69,4 @@ void GA::CHCRun() {
 		child = tmp;
 	}
 }
+

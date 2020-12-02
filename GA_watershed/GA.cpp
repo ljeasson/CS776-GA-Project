@@ -6,12 +6,15 @@
  */
 
 #include "GA.h"
-#include <string>
-#include <iostream>
+#include "Utils.h"
+#include "Evaluate.h"
 
-GA::GA(int argc, char *argv[], int randomSeed) {
-	SetupOptions(argc, argv, randomSeed);
-	srandom(options.randomSeed);
+#include <string>
+#include<iostream>
+
+GA::GA(int argc, char *argv[]) {
+	SetupOptions(argc, argv);
+	InitializeRandomNumberGenerator(options.randomSeed);
 }
 
 GA::~GA() {
@@ -19,28 +22,30 @@ GA::~GA() {
 }
 
 
-void GA::SetupOptions(int argc, char *argv[], int randomSeed){
-	options.randomSeed = randomSeed;
-	options.popSize = 50;
-	options.chromLength = 15;
-	options.maxgens = 100;
+void GA::SetupOptions(int argc, char *argv[]){
+	options.randomSeed = 121;
+	options.popSize = 20;
+	options.chromLength = 100;
+	options.maxgens = 20;
 	options.px = 0.95f;
-	options.pm = 0.05f;
+	options.pm = 0.01f;
 	options.infile = std::string ("infile");
 	options.outfile = std::string("outfile");
+	//options.graphInfile = std::string("graph-raw.csv");
 }
 
 void GA::Init(){
+	//EvalInit(options);
 	parent = new Population(options);
 	child  = new Population(options);
 	parent->Init(); // evaluates, stats, and reports on initial population
 	parent->Statistics();
 	parent->Report(0);
+
 }
 
 void GA::Run(){
-
-	for(unsigned long int i = 1; i < options.maxgens; i++){
+	for (unsigned long int i = 1; i < options.maxgens; i++) {
 		parent->Generation(child);
 		child->Evaluate();
 		child->Statistics();
@@ -50,6 +55,7 @@ void GA::Run(){
 		parent = child;
 		child = tmp;
 	}
+
 }
 
 void GA::CHCRun() {
@@ -63,3 +69,4 @@ void GA::CHCRun() {
 		child = tmp;
 	}
 }
+

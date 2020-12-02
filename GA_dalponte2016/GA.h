@@ -8,13 +8,13 @@
 #ifndef GA_H_
 #define GA_H_
 
-#include <Population.h>
-#include <Options.h>
+#include "Population.h"
+#include "Options.h"
 
 class GA {
 
 private:
-	void Construct();
+	//void Construct();
 
 public:
 	GA(int argc, char *argv[], int randomSeed);

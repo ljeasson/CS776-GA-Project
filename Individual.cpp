@@ -65,8 +65,7 @@ void Individual::Init(){
 	)
 	
 	CHROMOSOME: 
-	[alg, chm, treetops, th_tree, th_seed, th_cr, max_cr, tol, ext, 
-	 dt1, dt2, R, Zu, hmin, speed_up, max_cr_factor, exclusion]
+	[alg, th_tree, th_seed, th_cr, max_cr, tol, ext, dt1, dt2, R, Zu, hmin, speed_up, max_cr_factor, exclusion]
 	*/
 	
 	chromosome[0] = IntInRange(0,3); // alg
@@ -149,4 +148,16 @@ void Individual::Mutate(double pm){
 			}
 		}
 	}
+}
+
+std::string Individual::ToString(){
+  std::string s = "";
+  for(int i = 0; i < chromLength; i++){
+    s = s + (chromosome[i] == 0 ? "0" : "1");
+  }
+  char str[256];
+  sprintf(str, "\nfitness = %f\n", fitness);
+  std::string x(str);
+  s = s + x;
+  return s;
 }

@@ -7,12 +7,13 @@ options("rgdal_show_exportToProj4_warnings"="none")
 library(lidR)
 library(rgdal)
 library(raster)
-#library(EBImage)
+library(sf)
 
 # Calculate the canopy height model (CHM) and TREETOPS
 las = readLAS("D:/PointClouds/for_lee/clipped_als/001_clipped_30.las")
 args <-commandArgs(trailingOnly = TRUE)
 alg <- as.integer(args[1])
+alg = 0
 
 algo = pitfree(thresholds = c(0,10,20,30,40,50), subcircle = 0.2)
 CHM  = grid_canopy(las, 0.5, algo)
@@ -87,10 +88,48 @@ trees = lasfilter(las, !is.na(treeID))
 # Calculate tree metrics and convex hulls
 metric = tree_metrics(las, .stdtreemetrics)
 hulls  = tree_hulls(las)
+print(hulls)
+
 hulls@data = dplyr::left_join(hulls@data, metric@data)
-spplot(hulls, "Z")
+hulls <- st_as_sf(hulls, crs = 3310)
+browser()
 
-# Write to shapefile
-writeOGR(obj=hulls, dsn="D:/PointClouds/for_lee/clipped_als", layer="001_clipped_30", driver="ESRI Shapefile", overwrite_layer = TRUE)
+print(hulls@data)
+print(metric@data)
+#spplot(hulls, "Z")
 
-# Compare shape files
+# NOT NECESSARY  Write to shapefile
+#writeOGR(obj=hulls, dsn="D:/PointClouds/for_lee/clipped_als", layer="001_clipped_30", driver="ESRI Shapefile", overwrite_layer = TRUE)
+#shape <- readOGR(dsn="D:/PointClouds/for_lee/clipped_als", layer="001_clipped_30")
+
+
+# Convert ground truth CSV to SF
+
+#ground_truths <- read.csv("D:/PointClouds/for_lee/ground_truth/csv/TLS_0001_20170531_01_clipped_30_height_norm_1.345_1.395.csv", header=TRUE)
+#print(str(ground_truths))
+#print(names(ground_truths))
+
+#head(ground_truths$x)
+#head(ground_truths$y)
+#head(ground_truths$area)
+#head(ground_truths$radius)
+
+#CRS <- st_crs(ground_truths)
+#print(CRS)
+#print(class(CRS))
+
+ground_truths <- st_read("D:/PointClouds/for_lee/ground_truth/shp/TLS_0001_20170531_01_clipped_30_height_norm_1.345_1.395.shp")
+ground_truths_sf <- st_as_sf(ground_truths, coords = c("x", "y", "area", "radius"), crs = 3310)
+print(ground_truths_sf)
+
+# Convert hull data to SF
+hulls_sf <- st_as_sf(hulls, coords = c("x", "y", "area", "radius"), crs = 3310)
+print(hulls_sf)
+
+# TODO: Detect presence vs. absence with st_intersects()
+print("Intersections")
+lst = st_intersects(hulls_sf, ground_truths_sf)
+print(lst)
+
+# TODO: Detect height difference
+# TODO: Return as vector of fitness values

@@ -33,18 +33,13 @@ public:
 
 	int ProportionalSelector();
 	void XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
-	
-	void halve(Population *child);
-	void CHCGeneration(Population *child);
-
 	void XoverOnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
 	void XoverTwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
 	void XoverUniform(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
-	void SBX(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
-	
-	void OnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
-	void TwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
-	
+
+	void halve(Population *child);
+	void CHCGeneration(Population *child);
+
 	std::string ToString(int start, int end);
 };
 

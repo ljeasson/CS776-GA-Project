@@ -10,17 +10,19 @@
 
 #include <Const.h>
 
+#include <string>
+
 class Individual {
 public:
 	Individual(int chromLen);
 	virtual ~Individual();
 
 	int chromLength;
-	double chromosome[MAX_CHROMLENGTH];
+	int chromosome[MAX_CHROMLENGTH];
 	double fitness;
 
 	void Init();
-	void Mutate(double pm);
+	void Mutate(float pm);
 
 	std::string ToString();
 };
