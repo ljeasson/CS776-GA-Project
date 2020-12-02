@@ -18,7 +18,7 @@ using namespace std;
 double Eval(Individual *individual){
 	double sum = 0;
 	double sumPA = 0; double modelSum = 0;
-	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/treeSeg_dalponte.R ";
+	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/treeSeg_dalponte2016.R ";
 	
 	cout << "Chromosome: ";
 	for(int i = 0; i < individual->chromLength; i++){
