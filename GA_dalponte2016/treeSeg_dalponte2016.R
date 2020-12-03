@@ -2,6 +2,7 @@
 # Call this function per eval()
 # CHROMOSOME: [th_tree, th_seed, th_cr, max_cr]
 
+options(warn=-1)
 options("rgdal_show_exportToProj4_warnings"="none")
 
 library(lidR)
@@ -140,7 +141,6 @@ ls_026 <- c("D:/PointClouds/for_lee/clipped_trees_circle/plot_026_tree_253.las",
             "D:/PointClouds/for_lee/clipped_trees_circle/plot_026_tree_276.las",
             "D:/PointClouds/for_lee/clipped_trees_circle/plot_026_tree_277.las")
 
-
 ls_121 <- c("D:/PointClouds/for_lee/clipped_trees_circle/plot_121_tree_285.las",
             "D:/PointClouds/for_lee/clipped_trees_circle/plot_121_tree_289.las",
             "D:/PointClouds/for_lee/clipped_trees_circle/plot_121_tree_292.las",
@@ -242,4 +242,4 @@ pa <- c(pa, overlap_frac_total)
 
 
 # TODO: Return as vector of fitness values
-cat("Final Vector: ",pa)
+cat("RESULT: ",pa)
