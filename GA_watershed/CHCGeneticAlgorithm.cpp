@@ -2,28 +2,30 @@
 //
 
 #include <iostream>
-#include "GA.h"
+#include <fstream>
+#include <Utils.h>
+#include <GA.h>
 
 using namespace std;
 int main(int argc, char * argv[])
 {
-	cout << "CHC genetic algorithm: " << argv[0] << endl; 
+	int low = 1;
+	int high = 1000;
 
-	GA ga(argc, argv);
+	srand(time(NULL));
+	int randomSeed = IntInRange(low, high);
 
-	ga.Init();
-	ga.CHCRun();
+	cout << "CHC genetic algorithm: " << argv[0] << endl;
+	cout << "Algorithm: dalponte2016()" << endl;
+	cout << "Chromosome: [th_tree, th_seed, th_cr, max_cr]" << endl; 
 
+	int runs = 5; //30;
+	GA ga(argc, argv, randomSeed);
+
+	for (int i = 0; i < runs; i++)
+	{
+		ga.Init();
+		ga.CHCRun();
+	}
 	return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

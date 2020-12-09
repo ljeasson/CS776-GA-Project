@@ -15,7 +15,7 @@
 
 Population::Population(Options opts) {
 	options = opts;
-	avg = min = max = sumFitness = -1;
+	avgFitness = minFitness = maxFitness = sumFitness = -1;
 	assert(options.popSize * 2 <= MAXPOP);
 	for (int i = 0; i < options.popSize * 2; i++){
 		members[i] = new Individual(options.chromLength);
@@ -39,21 +39,23 @@ void Population::Evaluate(){
 
 void Population::Statistics(){
 	sumFitness = 0;
-	min = members[0]->fitness;
-	max = members[0]->fitness;
+	minFitness = members[0]->fitness;
+	maxFitness = members[0]->fitness;
+	
 	for(int i = 0; i < options.popSize; i++){
 		sumFitness += members[i]->fitness;
-		if(min > members[i]->fitness)
-			min = members[i]->fitness;
-		if(max < members[i]->fitness)
-			max = members[i]->fitness;
+
+		if(minFitness > members[i]->fitness)
+			minFitness = members[i]->fitness;
+		if(maxFitness < members[i]->fitness)
+			maxFitness = members[i]->fitness;
 	}
-	avg = sumFitness/options.popSize;
+	avgFitness = sumFitness/options.popSize;
 }
 
 void Population::Report(unsigned long int gen){
 	char printbuf[1024];
-	sprintf(printbuf, "%4i \t %f \t %f \t %f\n ", (int)gen, min, avg, max);
+	sprintf(printbuf, "%4i \t %f \t %f \t %f\n", (int)gen, minFitness, avgFitness, maxFitness);
 	WriteBufToFile(std::string(printbuf), options.outfile);
 	std::cout << printbuf;
 }
@@ -142,6 +144,7 @@ int Population::ProportionalSelector(){
 	return i;
 }
 
+
 void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
 
 	for(int i = 0; i < options.chromLength; i++){ //First copy
@@ -149,14 +152,35 @@ void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, 
 		c2->chromosome[i] = p2->chromosome[i];
 	}
 	if(Flip(options.px)){ // if prob, then cross/exchange bits
-		OnePoint(p1, p2, c1, c2);
+		XoverUniform(p1, p2, c1, c2);
 	}
 
 	c1->Mutate(options.pm);
 	c2->Mutate(options.pm);
 }
 
-void Population::OnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){ //not debugged
+void Population::SBX(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
+    
+    // Calculate Beta
+    double u = DoubleInRange(0,1);
+    double beta;
+    double nc = 20; // nc = 2 (closer to parents), nc = 5 (far from parents)
+    if (u <= 0.5)
+        beta = pow( 2*u, 1/(nc+1) );
+    else
+        beta = pow ( 1/(2*(1-u)), 1/(nc+1) );
+
+    // Create children based on Beta 
+    for(int i = 0; i < options.chromLength; i++){
+        c1->chromosome[i] = 0.5 * ( (1+beta)*p1->chromosome[i] + (1-beta)*p2->chromosome[i] );
+        c2->chromosome[i] = 0.5 * ( (1-beta)*p1->chromosome[i] + (1+beta)*p2->chromosome[i] );
+    }
+}
+
+
+
+void Population::XoverOnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){	
+	// Exchange algorithm and parameter bits
 	int t1 = IntInRange(0, options.chromLength);
 	for(int i = t1; i < options.chromLength; i++){
 		c1->chromosome[i] = p2->chromosome[i];
@@ -164,13 +188,31 @@ void Population::OnePoint(Individual *p1, Individual *p2, Individual *c1, Indivi
 	}
 }
 
-void Population::TwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){ //not debugged
+void Population::XoverTwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
+	// Exchange algorithm bit
+	c1->chromosome[0] = p2->chromosome[0];
+	c2->chromosome[0] = p1->chromosome[0];
+
+	// Exchange parameter bits
 	int t1 = IntInRange(0, options.chromLength);
-	int t2 = IntInRange(0, options.chromLength);
-	int xp1 = std::min(t1, t2);
-	int xp2 = std::max(t1, t2);
-	for(int i = xp1; i < xp2; i++){
+	for(int i = t1; i < options.chromLength; i++){
 		c1->chromosome[i] = p2->chromosome[i];
 		c2->chromosome[i] = p1->chromosome[i];
+	}
+}
+
+void Population::XoverUniform(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
+	// Exchange all bits with equal probability
+	for(int i = 0; i < options.chromLength; i++){
+		if (Flip(0.5))
+			c1->chromosome[i] = p2->chromosome[i];
+		else
+			c1->chromosome[i] = p1->chromosome[i];
+
+		if (Flip(0.5))
+			c2->chromosome[i] = p1->chromosome[i];
+		else
+			c2->chromosome[i] = p2->chromosome[i];
+		
 	}
 }

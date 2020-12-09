@@ -6,9 +6,9 @@
  */
 
 #include "Utils.h"
-#include<iostream>
-#include<fstream>
-#include<string>
+#include <iostream>
+#include <fstream>
+#include <string>
 #include <random>
 
 std::mt19937 MyRandom;
@@ -37,6 +37,11 @@ int Flip(float prob){
 /* greater than equal to low and strictly less than high */
 int IntInRange(int low, int high){
 	return low + MyRandom()%(high - low);
+}
+/* greater than equal to low and strictly less than high */
+double DoubleInRange(double low, double high){
+    double f = (double)rand() / RAND_MAX;
+    return low + f * (high - low);
 }
 
 /* greater than equal to 0 and less than 1 */

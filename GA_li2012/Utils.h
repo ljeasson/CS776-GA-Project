@@ -19,6 +19,7 @@ void WriteBufToFile(std::string buf, std::string filename);
 float RandomFraction();
 int Flip(float prob);
 int IntInRange(int low, int high);
+double DoubleInRange(double low, double high);
 
 
 

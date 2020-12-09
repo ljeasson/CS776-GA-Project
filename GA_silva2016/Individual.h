@@ -18,7 +18,7 @@ public:
 	virtual ~Individual();
 
 	int chromLength;
-	int chromosome[MAX_CHROMLENGTH];
+	double chromosome[MAX_CHROMLENGTH];
 	double fitness;
 
 	void Init();

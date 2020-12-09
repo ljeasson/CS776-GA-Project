@@ -10,10 +10,10 @@
 #include "Evaluate.h"
 
 #include <string>
-#include<iostream>
+#include <iostream>
 
-GA::GA(int argc, char *argv[]) {
-	SetupOptions(argc, argv);
+GA::GA(int argc, char *argv[], int randomSeed) {
+	SetupOptions(argc, argv, randomSeed);
 	InitializeRandomNumberGenerator(options.randomSeed);
 }
 
@@ -22,13 +22,13 @@ GA::~GA() {
 }
 
 
-void GA::SetupOptions(int argc, char *argv[]){
-	options.randomSeed = 121;
-	options.popSize = 20;
-	options.chromLength = 100;
-	options.maxgens = 20;
+void GA::SetupOptions(int argc, char *argv[], int randomSeed){
+	options.randomSeed = randomSeed;
+	options.popSize = 30;
+	options.chromLength = 4;
+	options.maxgens = 10;
 	options.px = 0.95f;
-	options.pm = 0.01f;
+	options.pm = 0.05f;
 	options.infile = std::string ("infile");
 	options.outfile = std::string("outfile");
 	//options.graphInfile = std::string("graph-raw.csv");
