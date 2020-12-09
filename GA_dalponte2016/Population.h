@@ -22,8 +22,7 @@ public:
 
 	Options options;
 	Individual *members[MAXPOP];
-	double avg, min, max, sumFitness;
-
+	double avgFitness, minFitness, maxFitness, sumFitness;
 
 	void Init();
 	void Evaluate();
@@ -33,6 +32,8 @@ public:
 
 	int ProportionalSelector();
 	void XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
+	void SBX(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
+	
 	void XoverOnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
 	void XoverTwoPoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2);
 	void XoverUniform(Individual *p1, Individual *p2, Individual *c1, Individual *c2);

@@ -15,7 +15,7 @@
 
 Population::Population(Options opts) {
 	options = opts;
-	avg = min = max = sumFitness = -1;
+	avgFitness = minFitness = maxFitness = sumFitness = -1;
 	assert(options.popSize * 2 <= MAXPOP);
 	for (int i = 0; i < options.popSize * 2; i++){
 		members[i] = new Individual(options.chromLength);
@@ -39,21 +39,23 @@ void Population::Evaluate(){
 
 void Population::Statistics(){
 	sumFitness = 0;
-	min = members[0]->fitness;
-	max = members[0]->fitness;
+	minFitness = members[0]->fitness;
+	maxFitness = members[0]->fitness;
+	
 	for(int i = 0; i < options.popSize; i++){
 		sumFitness += members[i]->fitness;
-		if(min > members[i]->fitness)
-			min = members[i]->fitness;
-		if(max < members[i]->fitness)
-			max = members[i]->fitness;
+
+		if(minFitness > members[i]->fitness)
+			minFitness = members[i]->fitness;
+		if(maxFitness < members[i]->fitness)
+			maxFitness = members[i]->fitness;
 	}
-	avg = sumFitness/options.popSize;
+	avgFitness = sumFitness/options.popSize;
 }
 
 void Population::Report(unsigned long int gen){
 	char printbuf[1024];
-	sprintf(printbuf, "%4i \t %f \t %f \t %f\n ", (int)gen, min, avg, max);
+	sprintf(printbuf, "%4i \t %f \t %f \t %f\n", (int)gen, minFitness, avgFitness, maxFitness);
 	WriteBufToFile(std::string(printbuf), options.outfile);
 	std::cout << printbuf;
 }
@@ -156,6 +158,25 @@ void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, 
 	c1->Mutate(options.pm);
 	c2->Mutate(options.pm);
 }
+
+void Population::SBX(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
+    
+    // Calculate Beta
+    double u = DoubleInRange(0,1);
+    double beta;
+    double nc = 20; // nc = 2 (closer to parents), nc = 5 (far from parents)
+    if (u <= 0.5)
+        beta = pow( 2*u, 1/(nc+1) );
+    else
+        beta = pow ( 1/(2*(1-u)), 1/(nc+1) );
+
+    // Create children based on Beta 
+    for(int i = 0; i < options.chromLength; i++){
+        c1->chromosome[i] = 0.5 * ( (1+beta)*p1->chromosome[i] + (1-beta)*p2->chromosome[i] );
+        c2->chromosome[i] = 0.5 * ( (1-beta)*p1->chromosome[i] + (1+beta)*p2->chromosome[i] );
+    }
+}
+
 
 
 void Population::XoverOnePoint(Individual *p1, Individual *p2, Individual *c1, Individual *c2){	

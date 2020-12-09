@@ -10,7 +10,7 @@
 #include "Evaluate.h"
 
 #include <string>
-#include<iostream>
+#include <iostream>
 
 GA::GA(int argc, char *argv[], int randomSeed) {
 	SetupOptions(argc, argv, randomSeed);

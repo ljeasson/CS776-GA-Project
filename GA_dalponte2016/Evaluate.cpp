@@ -5,14 +5,15 @@
  *      Author: sushil
  */
 
-#include <Options.h>
 #include <Evaluate.h>
-#include <Individual.h>
+#include <Utils.h>
 #include <math.h>
+#include <stdio.h>
+
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
-#include <stdio.h>
+
 #include <string>
 #include <vector>
 
@@ -59,6 +60,59 @@ vector<double> split(const string& str, const string& delim)
 }
 
 double Eval(Individual *individual){
+	
+	double fitness = 0;
+
+	// Append chromosome genes as Rscript command line arguments
+	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/treeSeg_dalponte2016.R ";
+	cout << "Chromosome: ";
+	for(int i = 0; i < individual->chromLength; i++){
+		cout << individual->chromosome[i] << " ";
+		command.append(to_string(individual->chromosome[i]));
+		command.append(" ");
+	}
+	cout << endl << endl << command << endl << endl;
+
+	// Call Rscript to run tree segmentation with parameters
+	// Get console output as string
+	const char * com = command.c_str();
+	string console_output = exec(com);	
+	string RESULT = console_output.substr(console_output.find("RESULT:")+9, console_output.back());
+	cout << endl;
+
+	// Split final result vector into float values
+	// Calculate fitness: f(x) = (f(x1) + f(x2) + ... + f(xN))
+	// MAXIMIZE: Overlap detection proportion
+	vector<double> tree_seg_results = split(RESULT, " ");
+	for (auto & element : tree_seg_results) {
+    	cout << element << endl;
+		fitness += element;
+	}
+	cout << "FITNESS: " << fitness << endl;
+	
+	char printbuf[1024];
+	sprintf(printbuf, "%f\t%f\t%f\t%f\n%f\n\n", individual->chromosome[0], individual->chromosome[1], individual->chromosome[2], individual->chromosome[3], fitness);
+	WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/data.txt"));
+	cout << printbuf;
+
+	return fitness;
+}
+
+/*
+#include <Options.h>
+#include <Evaluate.h>
+#include <Individual.h>
+#include <math.h>
+#include <fstream>
+#include <iostream>
+#include <stdexcept>
+#include <stdio.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+double Eval(Individual *individual, Options opts){
 	double fitness = 0;
 	double objective = 0;
 
@@ -80,25 +134,33 @@ double Eval(Individual *individual){
 	cout << endl;
 
 	// Split final result vector into float values
-	// Get fitness
+	// Get fitness and calculate objective function
+	// MINIMIZE: Presence/absence detection proportion
+	// OPTION A: g(x) = 1/f(x1) + 1/f(x2) + ... + 1/f(xN)
+	// OPTION B: g(x) = 1/ (f(x1) + f(x2) + ... + f(xN))
 	vector<double> tree_seg_results = split(RESULT, " ");
 	for (auto & element : tree_seg_results) {
     	cout << element << endl;
 		fitness += element;
+		//objective += (1/element);
 	}
 	cout << "FITNESS: " << fitness << endl;
 	
-	// Calculate objective function based on fitness
-	// MINIMIZE: Presence/absence detection proportion
-	// OPTION A: g(x) = 1/f(x1) + 1/f(x2) + ... + 1/f(xN)
-	/*
-	for (auto & element : tree_seg_results) {
-    	objective += (1/element);
-	}
-	*/
-	// OPTION B: g(x) = 1/ (f(x1) + f(x2) + ... + f(xN))
 	objective = 1/fitness;
-	
 	cout << "OBJECTIVE FUNCTION: " << objective << endl << endl;
-	return objective;
+
+	//ofstream data;
+	//data.open ("data.txt");
+	//data << individual->chromosome[0] << " " << individual->chromosome[1] << " " << individual->chromosome[2] << " " << individual->chromosome[3] << "\nFITNESS: " << fitness << "\nOBJECTIVE: " << objective << "\n";
+	//data.close();
+	//ofstream ofs("C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/data.txt", ofstream::app);
+	//if(ofs.good()){
+	//	ofs << individual->chromosome[0] << " " << individual->chromosome[1] << " " << individual->chromosome[2] << " " << individual->chromosome[3] << "\nFITNESS: " << fitness << "\nOBJECTIVE: " << objective << "\n";
+	//}
+	//ofs.flush();
+	//ofs.close();
+	
+
+	return fitness;
 }
+*/
