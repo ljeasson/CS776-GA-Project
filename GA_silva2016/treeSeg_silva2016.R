@@ -1,6 +1,6 @@
 # treeseg.R
 # Call this function per eval()
-# CHROMOSOME: [th_tree, th_seed, th_cr, max_cr]
+# CHROMOSOME: [max_cr_factor, exclusion = 0.3]
 
 options(warn=-1)
 options("rgdal_show_exportToProj4_warnings"="none")
@@ -24,24 +24,20 @@ SEGMENT <- function(las, ground_truths)
   CHM = focal(CHM, w = ker, fun = median)
   CHM = focal(CHM, w = ker, fun = median)
   
+  # silva2016(
+  #    chm,
+  #    treetops,
+  #    max_cr_factor = 0.6,
+  #    exclusion = 0.3,
+  #    ID = "treeID")
+  cat("silva2016(chm, treetops, max_cr_factor = ", as.character(args[1]), ", exclusion = ", as.character(args[2]), ")")
+    
+  las = segment_trees(las, watershed(
+    chm = CHM,
+    treetops = TREETOPS,
+    max_cr_factor = as.double(args[1]),
+    exclusion = as.double(args[2]) ))
   
-  #dalponte2016(
-  #  chm,  [grid_canopy() or read external file]
-  #  treetops,  [find_trees() or read shp file]
-  #  th_tree = 2,  
-  #  th_seed = 0.45,  [between 0 and 1]
-  #  th_cr = 0.55,  [between 0 and 1]
-  #  max_cr = 10,  
-  #  ID = "treeID"  
-  #)
-  cat("dalponte2016(chm, treetops, th_tree = ", as.character(args[1]), ", th_seed = ", as.character(args[2]), ", th_cr = ", as.character(args[3]), ", max_cr = ", as.character(args[4]), ", ID = 'treeID')")
-  las = segment_trees(las, dalponte2016(
-    chm = CHM, 
-    treetops = TREETOPS, 
-    th_tree = as.double(args[1]),
-    th_seed = as.double(args[2]),
-    th_cr = as.double(args[3]),
-    max_cr = as.double(args[4]) ))
   
   
   # remove points that are not assigned to a tree

@@ -33,7 +33,7 @@ void Population::Init(){
 
 void Population::Evaluate(){
 	for (int i = 0; i < options.popSize; i++){
-		members[i]->fitness = Eval(members[i]);
+		members[i]->fitness = Eval(members[i], options);
 	}
 }
 
@@ -109,7 +109,7 @@ int compareFitness(const void *x, const void *y) {
 
 void Population::halve(Population*child) {
   for (int i = options.popSize; i < 2 * options.popSize; i++){
-    members[i]->fitness = Eval(members[i]);
+    members[i]->fitness = Eval(members[i], options);
   }
   //std::cout << "Intermediate\n";
   //std::cout << ToString(options.popSize, options.popSize * 2);
@@ -152,7 +152,7 @@ void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, 
 		c2->chromosome[i] = p2->chromosome[i];
 	}
 	if(Flip(options.px)){ // if prob, then cross/exchange bits
-		XoverUniform(p1, p2, c1, c2);
+		SBX(p1, p2, c1, c2);
 	}
 
 	c1->Mutate(options.pm);

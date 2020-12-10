@@ -21,9 +21,8 @@ Individual::~Individual() {
 
 void Individual::Init(){
 	chromosome[0] = IntInRange(1,20); // th_tree
-	chromosome[1] = DoubleInRange(0.0,1.0); // th_seed
-	chromosome[2] = DoubleInRange(0.0,1.0); // th_cr
-	chromosome[3] = IntInRange(1,100); // max_cr
+	chromosome[1] = IntInRange(1,50); // tolerance
+	chromosome[2] = IntInRange(1,100); // ext
 	
 	//std::cout << "Init: " << ToString() << std::endl;
 }
@@ -33,9 +32,8 @@ void Individual::Mutate(float pm){
 		if(Flip(pm)){
 			switch (i){
 				case 0: chromosome[0] = IntInRange(1,20); break; // th_tree
-				case 1: chromosome[1] = DoubleInRange(0.0,1.0); break; // th_seed
-				case 2: chromosome[2] = DoubleInRange(0.0,1.0); break; // th_cr
-				case 3: chromosome[3] = IntInRange(1,100); break; // max_cr
+				case 1: chromosome[1] = IntInRange(1,50); break; // tolerance
+				case 2: chromosome[2] = IntInRange(1,100); break; // ext
 			}
 		}
 	}

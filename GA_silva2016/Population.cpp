@@ -152,7 +152,7 @@ void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, 
 		c2->chromosome[i] = p2->chromosome[i];
 	}
 	if(Flip(options.px)){ // if prob, then cross/exchange bits
-		XoverUniform(p1, p2, c1, c2);
+		SBX(p1, p2, c1, c2);
 	}
 
 	c1->Mutate(options.pm);

@@ -20,11 +20,13 @@ Individual::~Individual() {
 }
 
 void Individual::Init(){
-	chromosome[0] = IntInRange(1,20); // th_tree
-	chromosome[1] = DoubleInRange(0.0,1.0); // th_seed
-	chromosome[2] = DoubleInRange(0.0,1.0); // th_cr
-	chromosome[3] = IntInRange(1,100); // max_cr
-	
+	chromosome[0] = DoubleInRange(1.0,50.0); // dt1
+	chromosome[1] = DoubleInRange(1.0,50.0); // dt2
+	chromosome[2] = IntInRange(0,100); // R
+	chromosome[3] = IntInRange(1,20); // Zu
+	chromosome[4] = IntInRange(1,100); // hmin
+	chromosome[5] = IntInRange(1,20); // speed_up
+
 	//std::cout << "Init: " << ToString() << std::endl;
 }
 
@@ -32,10 +34,12 @@ void Individual::Mutate(float pm){
 	for(int i = 0; i < chromLength; i++){
 		if(Flip(pm)){
 			switch (i){
-				case 0: chromosome[0] = IntInRange(1,20); break; // th_tree
-				case 1: chromosome[1] = DoubleInRange(0.0,1.0); break; // th_seed
-				case 2: chromosome[2] = DoubleInRange(0.0,1.0); break; // th_cr
-				case 3: chromosome[3] = IntInRange(1,100); break; // max_cr
+				case 0: chromosome[0] = DoubleInRange(1.0,50.0); // dt1
+				case 1: chromosome[1] = DoubleInRange(1.0,50.0); // dt2
+				case 2: chromosome[2] = IntInRange(0,100); // R
+				case 3: chromosome[3] = IntInRange(1,20); // Zu
+				case 4: chromosome[4] = IntInRange(1,100); // hmin
+				case 5: chromosome[5] = IntInRange(1,20); // speed_up
 			}
 		}
 	}

@@ -59,7 +59,7 @@ vector<double> split(const string& str, const string& delim)
     return token_nums;
 }
 
-double Eval(Individual *individual){
+double Eval(Individual *individual, Options opts){
 	
 	double fitness = 0;
 
@@ -93,6 +93,7 @@ double Eval(Individual *individual){
 	char printbuf[1024];
 	sprintf(printbuf, "%f\t%f\t%f\t%f\n%f\n\n", individual->chromosome[0], individual->chromosome[1], individual->chromosome[2], individual->chromosome[3], fitness);
 	WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/data.txt"));
+	//WriteBufToFile(string(printbuf), opts.outfile);
 	cout << printbuf;
 
 	return fitness;
