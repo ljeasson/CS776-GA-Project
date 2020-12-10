@@ -29,6 +29,9 @@ void Individual::Init(){
 }
 
 void Individual::Mutate(float pm){
+	
+	//std::cout << "BEFORE Mutation: " << ToString() << std::endl;
+	
 	for(int i = 0; i < chromLength; i++){
 		if(Flip(pm)){
 			switch (i){
@@ -39,7 +42,8 @@ void Individual::Mutate(float pm){
 			}
 		}
 	}
-	//std::cout << "Mutation: " << ToString() << std::endl;
+	
+	//std::cout << "AFTER Mutation: " << ToString() << std::endl;
 }
 
 std::string Individual::ToString(){

@@ -154,8 +154,8 @@ gt <- c("D:/PointClouds/for_lee/ground_truth/shp/TLS_0001_20170531_01_clipped_30
         "D:/PointClouds/for_lee/ground_truth/shp/TLS_0121_20171010_01_clipped_30_height_norm_1.345_1.395.shp")
 
 
+#ov <- array(numeric(),c(6,0,0)) 
 pa <- array(numeric(),c(6,0,0)) 
-th <- array(numeric(),c(6,0,0)) 
 
 # ls_001
 overlap_length = 0

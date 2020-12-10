@@ -10,6 +10,9 @@
 #include <fstream>
 #include <string>
 #include <random>
+#include <cmath>
+
+using namespace std;
 
 std::mt19937 MyRandom;
 std::uniform_real_distribution<float> uniformFloat01Distribution;
@@ -41,7 +44,7 @@ int IntInRange(int low, int high){
 /* greater than equal to low and strictly less than high */
 double DoubleInRange(double low, double high){
     double f = (double)rand() / RAND_MAX;
-    return low + f * (high - low);
+	return  low + f * (high - low);
 }
 
 /* greater than equal to 0 and less than 1 */

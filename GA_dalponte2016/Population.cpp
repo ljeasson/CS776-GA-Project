@@ -10,8 +10,9 @@
 #include <Evaluate.h>
 #include <Utils.h>
 #include <iostream>
-
 #include <cstring>
+
+using namespace std;
 
 Population::Population(Options opts) {
 	options = opts;
@@ -123,9 +124,9 @@ void Population::halve(Population*child) {
   //std::cout << child->ToString(0, options.popSize);  
 }
 
-std::string Population::ToString(int start, int end){
+std::string Population::ToString(){
   std::string s = "";
-  for(int i = start; i < end; i++){
+  for(int i = 0; i < options.chromLength; i++){
     s = s + members[i]->ToString();
     s = s + "------------\n";
   }
@@ -161,6 +162,20 @@ void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, 
 
 void Population::SBX(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
     
+	/*
+	cout << "BEFORE Xover: " << endl << "p1: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << p1->chromosome[i] << " ";
+    }
+    cout << endl;
+
+    cout << "p2: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << p2->chromosome[i] << " ";
+    }
+    cout << endl;
+	*/
+
     // Calculate Beta
     double u = DoubleInRange(0,1);
     double beta;
@@ -175,6 +190,20 @@ void Population::SBX(Individual *p1, Individual *p2, Individual *c1, Individual 
         c1->chromosome[i] = 0.5 * ( (1+beta)*p1->chromosome[i] + (1-beta)*p2->chromosome[i] );
         c2->chromosome[i] = 0.5 * ( (1-beta)*p1->chromosome[i] + (1+beta)*p2->chromosome[i] );
     }
+
+	/*
+	cout << "AFTER Xover: " << endl << "c1: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << c1->chromosome[i] << " ";
+    }
+    cout << endl;
+
+    cout << "c2: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << c2->chromosome[i] << " ";
+    }
+    cout << endl << endl;
+	*/
 }
 
 

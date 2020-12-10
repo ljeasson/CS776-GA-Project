@@ -68,7 +68,10 @@ double Eval(Individual *individual, Options opts){
 	cout << "Chromosome: ";
 	for(int i = 0; i < individual->chromLength; i++){
 		cout << individual->chromosome[i] << " ";
-		command.append(to_string(individual->chromosome[i]));
+		if (i == 1 || i == 2)
+			command.append(to_string(round(individual->chromosome[i]/0.05) * 0.05 ));
+		else
+			command.append(to_string(individual->chromosome[i]));
 		command.append(" ");
 	}
 	cout << endl << endl << command << endl << endl;
@@ -98,6 +101,7 @@ double Eval(Individual *individual, Options opts){
 
 	return fitness;
 }
+
 
 /*
 #include <Options.h>
