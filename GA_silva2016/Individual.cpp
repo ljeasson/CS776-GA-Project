@@ -20,8 +20,8 @@ Individual::~Individual() {
 }
 
 void Individual::Init(){
-	chromosome[0] = DoubleInRange(0.0,1.0); // max_cr_factor
-	chromosome[1] = DoubleInRange(0.0,1.0); // exclusion
+	chromosome[0] = DoubleInRange(0.0,0.99); // max_cr_factor
+	chromosome[1] = DoubleInRange(0.0,0.95); // exclusion
 	
 	//std::cout << "Init: " << ToString() << std::endl;
 }
@@ -30,8 +30,8 @@ void Individual::Mutate(float pm){
 	for(int i = 0; i < chromLength; i++){
 		if(Flip(pm)){
 			switch (i){
-				case 0: chromosome[0] = DoubleInRange(0.0,1.0); break; // max_cr_factor
-				case 1: chromosome[1] = DoubleInRange(0.0,1.0); break; // exclusion
+				case 0: chromosome[0] = DoubleInRange(0.0,0.99); break; // max_cr_factor
+				case 1: chromosome[1] = DoubleInRange(0.0,0.95); break; // exclusion
 			}
 		}
 	}

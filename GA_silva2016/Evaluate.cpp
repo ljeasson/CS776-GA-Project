@@ -62,13 +62,16 @@ vector<double> split(const string& str, const string& delim)
 double Eval(Individual *individual){
 	
 	double fitness = 0;
+	int sum = 0;
 
 	// Append chromosome genes as Rscript command line arguments
-	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/treeSeg_dalponte2016.R ";
+	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/treeSeg_silva2016.R ";
 	cout << "Chromosome: ";
 	for(int i = 0; i < individual->chromLength; i++){
 		cout << individual->chromosome[i] << " ";
-		command.append(to_string(individual->chromosome[i]));
+		if 		(i == 0) command.append(to_string(round(individual->chromosome[i]/0.01) * 0.01 ));
+		else if (i == 1) command.append(to_string(round(individual->chromosome[i]/0.05) * 0.05 ));
+		else 			 command.append(to_string(individual->chromosome[i]));
 		command.append(" ");
 	}
 	cout << endl << endl << command << endl << endl;
@@ -87,12 +90,13 @@ double Eval(Individual *individual){
 	for (auto & element : tree_seg_results) {
     	cout << element << endl;
 		fitness += element;
+		sum++;
 	}
-	cout << "FITNESS: " << fitness << endl;
+	fitness /= sum;
 	
 	char printbuf[1024];
 	sprintf(printbuf, "%f\t%f\t%f\t%f\n%f\n\n", individual->chromosome[0], individual->chromosome[1], individual->chromosome[2], individual->chromosome[3], fitness);
-	WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/data.txt"));
+	WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/parameters.txt"));
 	cout << printbuf;
 
 	return fitness;

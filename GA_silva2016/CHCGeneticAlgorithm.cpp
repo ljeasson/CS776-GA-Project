@@ -16,8 +16,8 @@ int main(int argc, char * argv[])
 	int randomSeed = IntInRange(low, high);
 
 	cout << "CHC genetic algorithm: " << argv[0] << endl;
-	cout << "Algorithm: dalponte2016()" << endl;
-	cout << "Chromosome: [th_tree, th_seed, th_cr, max_cr]" << endl; 
+	cout << "Algorithm: silva2016()" << endl;
+	cout << "Chromosome: [max_cr_factor, exclusion]" << endl; 
 
 	int runs = 5; //30;
 	GA ga(argc, argv, randomSeed);

@@ -62,6 +62,7 @@ vector<double> split(const string& str, const string& delim)
 double Eval(Individual *individual, Options opts){
 	
 	double fitness = 0;
+	int sum = 0;
 
 	// Append chromosome genes as Rscript command line arguments
 	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/treeSeg_dalponte2016.R ";
@@ -84,18 +85,18 @@ double Eval(Individual *individual, Options opts){
 	cout << endl;
 
 	// Split final result vector into float values
-	// Calculate fitness: f(x) = (f(x1) + f(x2) + ... + f(xN))
+	// Calculate fitness: f(x) = (f(x1) + f(x2) + ... + f(xN)) / N
 	// MAXIMIZE: Overlap detection proportion
 	vector<double> tree_seg_results = split(RESULT, " ");
 	for (auto & element : tree_seg_results) {
-    	cout << element << endl;
 		fitness += element;
+		sum++;
 	}
-	cout << "FITNESS: " << fitness << endl;
-	
+	fitness /= sum;
+
 	char printbuf[1024];
-	sprintf(printbuf, "%f\t%f\t%f\t%f\n%f\n\n", individual->chromosome[0], individual->chromosome[1], individual->chromosome[2], individual->chromosome[3], fitness);
-	WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/data.txt"));
+	sprintf(printbuf, "%f\t%f\t%f\t%f\n%f\n\n", individual->chromosome[0], round(individual->chromosome[1]/0.05) * 0.05 , round(individual->chromosome[2]/0.05) * 0.05, individual->chromosome[3], fitness);
+	WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/parameters.txt"));
 	//WriteBufToFile(string(printbuf), opts.outfile);
 	cout << printbuf;
 

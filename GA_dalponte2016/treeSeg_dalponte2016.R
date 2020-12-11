@@ -10,7 +10,7 @@ library(rgdal)
 library(raster)
 library(sf)
 
-SEGMENT <- function(las, ground_truths)
+SEGMENT <- function(las, ground_truths, vals)
 {
   # Calculate the canopy height model (CHM) and TREETOPS
   args <-commandArgs(trailingOnly = TRUE)
@@ -79,6 +79,13 @@ SEGMENT <- function(las, ground_truths)
       overlap_num = overlap_num + 1 
     }
   }
+  if (vals == "001"){ls_001_vals <<- c(ls_001_vals, overlap_num)}
+  if (vals == "002"){ls_002_vals <<- c(ls_002_vals, overlap_num)}
+  if (vals == "017"){ls_017_vals <<- c(ls_017_vals, overlap_num)}
+  if (vals == "022"){ls_022_vals <<- c(ls_022_vals, overlap_num)}
+  if (vals == "026"){ls_026_vals <<- c(ls_026_vals, overlap_num)}
+  if (vals == "121"){ls_121_vals <<- c(ls_121_vals, overlap_num)}
+  
   overlap_frac = overlap_num / overlap_length
   overlap_frac_total <<- overlap_frac_total + overlap_frac
   
@@ -154,8 +161,17 @@ gt <- c("D:/PointClouds/for_lee/ground_truth/shp/TLS_0001_20170531_01_clipped_30
         "D:/PointClouds/for_lee/ground_truth/shp/TLS_0121_20171010_01_clipped_30_height_norm_1.345_1.395.shp")
 
 
+
 #ov <- array(numeric(),c(6,0,0)) 
+ls_001_vals <- array(numeric(),c(15,0,0))
+ls_002_vals <- array(numeric(),c(6,0,0)) 
+ls_017_vals <- array(numeric(),c(8,0,0)) 
+ls_022_vals <- array(numeric(),c(10,0,0)) 
+ls_026_vals <- array(numeric(),c(5,0,0)) 
+ls_121_vals <- array(numeric(),c(4,0,0)) 
+ov <- array(numeric(),c(6,0,0)) 
 pa <- array(numeric(),c(6,0,0)) 
+
 
 # ls_001
 overlap_length = 0
@@ -164,11 +180,13 @@ overlap_frac_total = 0
 for (i in 1:length(ls_001)){
   las = readLAS(ls_001[i])
   ground_truths <- st_read(gt[1])
-  SEGMENT(las, ground_truths)
+  SEGMENT(las, ground_truths, "001")
 }
 print(overlap_length)
 print(overlap_frac_total)
+ov <- c(ov, overlap_length)
 pa <- c(pa, overlap_frac_total)
+
 
 
 # ls_002
@@ -178,11 +196,13 @@ overlap_frac_total = 0
 for (i in 1:length(ls_002)){
   las = readLAS(ls_002[i])
   ground_truths <- st_read(gt[2])
-  SEGMENT(las, ground_truths)
+  SEGMENT(las, ground_truths, "002")
 }
 print(overlap_length)
 print(overlap_frac_total)
+ov <- c(ov, overlap_length)
 pa <- c(pa, overlap_frac_total)
+
 
 
 # ls_017
@@ -192,11 +212,13 @@ overlap_frac_total = 0
 for (i in 1:length(ls_017)){
   las = readLAS(ls_017[i])
   ground_truths <- st_read(gt[3])
-  SEGMENT(las, ground_truths)
+  SEGMENT(las, ground_truths, "017")
 }
 print(overlap_length)
 print(overlap_frac_total)
+ov <- c(ov, overlap_length)
 pa <- c(pa, overlap_frac_total)
+
 
 
 # ls_022
@@ -206,11 +228,13 @@ overlap_frac_total = 0
 for (i in 1:length(ls_022)){
   las = readLAS(ls_022[i])
   ground_truths <- st_read(gt[4])
-  SEGMENT(las, ground_truths)
+  SEGMENT(las, ground_truths, "022")
 }
 print(overlap_length)
 print(overlap_frac_total)
+ov <- c(ov, overlap_length)
 pa <- c(pa, overlap_frac_total)
+
 
 
 # ls_026
@@ -220,11 +244,13 @@ overlap_frac_total = 0
 for (i in 1:length(ls_026)){
   las = readLAS(ls_026[i])
   ground_truths <- st_read(gt[5])
-  SEGMENT(las, ground_truths)
+  SEGMENT(las, ground_truths, "026")
 }
 print(overlap_length)
 print(overlap_frac_total)
+ov <- c(ov, overlap_length)
 pa <- c(pa, overlap_frac_total)
+
 
 
 # ls_121
@@ -234,12 +260,27 @@ overlap_frac_total = 0
 for (i in 1:length(ls_121)){
   las = readLAS(ls_121[i])
   ground_truths <- st_read(gt[6])
-  SEGMENT(las, ground_truths)
+  SEGMENT(las, ground_truths, "121")
 }
 print(overlap_length)
 print(overlap_frac_total)
+ov <- c(ov, overlap_length)
 pa <- c(pa, overlap_frac_total)
 
 
 # TODO: Return as vector of fitness values
+cat("ls_001: ", ls_001_vals, "\n")
+cat("ls_002: ", ls_002_vals, "\n")
+cat("ls_017: ", ls_017_vals, "\n")
+cat("ls_022: ", ls_022_vals, "\n")
+cat("ls_026: ", ls_026_vals, "\n")
+cat("ls_121: ", ls_121_vals, "\n")
+
+
+ls_str <- paste(c(ls_001_vals,"\n",ls_002_vals,"\n",ls_017_vals,"\n",ls_022_vals,"\n",ls_026_vals,"\n", ls_121_vals,"\n"), collapse=" ")
+cat(ls_str, file="C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/ls.txt", sep="\n", append=TRUE)
+#writeLines(ls_str, ls_file)
+
+
+cat("ov: ", ov, "\n")
 cat("RESULT: ",pa)
