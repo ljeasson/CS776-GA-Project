@@ -58,7 +58,7 @@ def main(argv):
     plt.legend(loc="lower right")
 
     #plt.savefig("figs/"+fileName+"_fitness.png")
-    plt.savefig("C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/figs/fitness.png")
+    plt.savefig("C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/figs/fitness.png")
     plt.draw()
     plt.waitforbuttonpress(0)
     plt.close()
@@ -98,7 +98,7 @@ def main(argv):
                             loc='center')
     the_table.set_fontsize(20)
     the_table.scale(2, 2)
-    plt.savefig("C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/figs/rankings.png")
+    plt.savefig("C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/figs/rankings.png")
     plt.draw()
     plt.waitforbuttonpress(0)
     plt.close()
@@ -119,6 +119,7 @@ def main(argv):
 
     plt.show()
     '''
+    
 
 if __name__ == "__main__":
    main(sys.argv[1:])
