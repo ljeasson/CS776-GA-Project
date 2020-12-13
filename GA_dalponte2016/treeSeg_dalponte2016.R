@@ -5,6 +5,17 @@
 options(warn=-1)
 options("rgdal_show_exportToProj4_warnings"="none")
 
+# Open a file to send messages to
+zz <- file("messages.Rout", open = "wt")
+# Divert messages to that file
+sink(zz, type = "message")
+message("not gonna show up in console")
+
+suppressWarnings(suppressMessages(library(lidR)))
+suppressWarnings(suppressMessages(library(rgdal)))
+suppressWarnings(suppressMessages(library(raster)))
+suppressWarnings(suppressMessages(library(sf)))
+
 library(lidR)
 library(rgdal)
 library(raster)
@@ -93,9 +104,6 @@ SEGMENT <- function(las, ground_truths, vals)
   cat("Overlap Len: ", as.character(overlap_length), "\n")
   cat("Overlap Frac: ", as.character(overlap_frac), "\n")
   
-  
-  # TODO: Detect height difference
-  
   print("-----------------------------------------------------------------")
 }
 
@@ -162,7 +170,7 @@ gt <- c("D:/PointClouds/for_lee/ground_truth/shp/TLS_0001_20170531_01_clipped_30
 
 
 
-#ov <- array(numeric(),c(6,0,0)) 
+
 ls_001_vals <- array(numeric(),c(15,0,0))
 ls_002_vals <- array(numeric(),c(6,0,0)) 
 ls_017_vals <- array(numeric(),c(8,0,0)) 

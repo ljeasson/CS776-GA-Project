@@ -5,6 +5,17 @@
 options(warn=-1)
 options("rgdal_show_exportToProj4_warnings"="none")
 
+# Open a file to send messages to
+zz <- file("messages.Rout", open = "wt")
+# Divert messages to that file
+sink(zz, type = "message")
+message("not gonna show up in console")
+
+suppressWarnings(suppressMessages(library(lidR)))
+suppressWarnings(suppressMessages(library(rgdal)))
+suppressWarnings(suppressMessages(library(raster)))
+suppressWarnings(suppressMessages(library(sf)))
+
 library(lidR)
 library(rgdal)
 library(raster)
@@ -271,7 +282,8 @@ cat("ls_121: ", ls_121_vals, "\n")
 
 
 ls_str <- paste(c(ls_001_vals,"\n",ls_002_vals,"\n",ls_017_vals,"\n",ls_022_vals,"\n",ls_026_vals,"\n", ls_121_vals,"\n"), collapse=" ")
-cat(ls_str, file="C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/ls.txt", sep="\n", append=TRUE)
+#cat(ls_str, file="C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/ls.txt", sep="\n", append=TRUE)
+cat(ls_str, file="C:/Users/Lee/Desktop/CS776-GA-Project/silva_ls.txt", sep="\n", append=TRUE)
 #writeLines(ls_str, ls_file)
 
 

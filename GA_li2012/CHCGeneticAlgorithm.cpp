@@ -7,6 +7,7 @@
 #include <GA.h>
 
 using namespace std;
+
 int main(int argc, char * argv[])
 {
 	int low = 1;
@@ -17,9 +18,9 @@ int main(int argc, char * argv[])
 
 	cout << "CHC genetic algorithm: " << argv[0] << endl;
 	cout << "Algorithm: li2012()" << endl;
-	cout << "Chromosome: [dt1, dt2, R, Zu, hmin, speed_up]" << endl; 
+	cout << "Chromosome: [dt1, dt2, R, Zu, hmin, speed_up]" << endl << endl; 
 
-	int runs = 5; //30;
+	int runs = 5;
 	GA ga(argc, argv, randomSeed);
 
 	for (int i = 0; i < runs; i++)

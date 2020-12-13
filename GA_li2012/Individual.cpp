@@ -20,30 +20,35 @@ Individual::~Individual() {
 }
 
 void Individual::Init(){
+	
 	chromosome[0] = DoubleInRange(1.0,50.0); // dt1
 	chromosome[1] = DoubleInRange(1.0,50.0); // dt2
 	chromosome[2] = IntInRange(0,100); // R
 	chromosome[3] = IntInRange(1,20); // Zu
 	chromosome[4] = IntInRange(1,100); // hmin
 	chromosome[5] = IntInRange(1,20); // speed_up
-
+	
 	//std::cout << "Init: " << ToString() << std::endl;
 }
 
 void Individual::Mutate(float pm){
+	
+	//std::cout << "BEFORE Mutation: " << ToString() << std::endl;
+	
 	for(int i = 0; i < chromLength; i++){
 		if(Flip(pm)){
 			switch (i){
-				case 0: chromosome[0] = DoubleInRange(1.0,50.0); // dt1
-				case 1: chromosome[1] = DoubleInRange(1.0,50.0); // dt2
-				case 2: chromosome[2] = IntInRange(0,100); // R
-				case 3: chromosome[3] = IntInRange(1,20); // Zu
-				case 4: chromosome[4] = IntInRange(1,100); // hmin
-				case 5: chromosome[5] = IntInRange(1,20); // speed_up
+				case 0: chromosome[0] = DoubleInRange(1.0,50.0); break; // dt1
+				case 1: chromosome[1] = DoubleInRange(1.0,50.0); break; // dt2
+				case 2: chromosome[2] = IntInRange(0,100); break; // R
+				case 3: chromosome[3] = IntInRange(1,20); break; // Zu
+				case 4: chromosome[2] = IntInRange(1,100); break; // hmin
+				case 5: chromosome[3] = IntInRange(1,20); break; // speed_up
 			}
 		}
 	}
-	//std::cout << "Mutation: " << ToString() << std::endl;
+		
+	//std::cout << "AFTER Mutation: " << ToString() << std::endl;
 }
 
 std::string Individual::ToString(){

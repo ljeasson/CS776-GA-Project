@@ -5,6 +5,17 @@
 options(warn=-1)
 options("rgdal_show_exportToProj4_warnings"="none")
 
+# Open a file to send messages to
+zz <- file("messages.Rout", open = "wt")
+# Divert messages to that file
+sink(zz, type = "message")
+message("not gonna show up in console")
+
+suppressWarnings(suppressMessages(library(lidR)))
+suppressWarnings(suppressMessages(library(rgdal)))
+suppressWarnings(suppressMessages(library(raster)))
+suppressWarnings(suppressMessages(library(sf)))
+
 library(lidR)
 library(rgdal)
 library(raster)

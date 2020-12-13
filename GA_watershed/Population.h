@@ -41,7 +41,7 @@ public:
 	void halve(Population *child);
 	void CHCGeneration(Population *child);
 
-	std::string ToString(int start, int end);
+	std::string ToString();
 };
 
 #endif /* POPULATION_H_ */

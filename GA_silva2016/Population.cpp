@@ -10,8 +10,9 @@
 #include <Evaluate.h>
 #include <Utils.h>
 #include <iostream>
-
 #include <cstring>
+
+using namespace std;
 
 Population::Population(Options opts) {
 	options = opts;
@@ -82,7 +83,7 @@ void Population::CHCGeneration(Population *child) {
 	Individual *p1, *p2, *c1, *c2;
 	
 	//std::cout << "Parents" << std::endl;
-	//std::cout << ToString(0, options.popSize);
+	//std::cout << ToString();
 	
 	for (int i = 0; i < options.popSize; i += 2) {
 		pi1 = ProportionalSelector();
@@ -123,9 +124,9 @@ void Population::halve(Population*child) {
   //std::cout << child->ToString(0, options.popSize);  
 }
 
-std::string Population::ToString(int start, int end){
+std::string Population::ToString(){
   std::string s = "";
-  for(int i = start; i < end; i++){
+  for(int i = 0; i < options.chromLength; i++){
     s = s + members[i]->ToString();
     s = s + "------------\n";
   }
@@ -151,20 +152,34 @@ void Population::XoverAndMutate(Individual *p1, Individual *p2, Individual *c1, 
 		c1->chromosome[i] = p1->chromosome[i];
 		c2->chromosome[i] = p2->chromosome[i];
 	}
+	
 	if(Flip(options.px)){ // if prob, then cross/exchange bits
 		SBX(p1, p2, c1, c2);
 	}
-
+	
 	c1->Mutate(options.pm);
 	c2->Mutate(options.pm);
 }
 
 void Population::SBX(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
-    
+    /*
+	cout << "BEFORE Xover: " << endl << "p1: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << p1->chromosome[i] << " ";
+    }
+    cout << endl;
+
+    cout << "p2: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << p2->chromosome[i] << " ";
+    }
+    cout << endl;
+	*/
+
     // Calculate Beta
     double u = DoubleInRange(0,1);
     double beta;
-    double nc = 20; // nc = 2 (closer to parents), nc = 5 (far from parents)
+    double nc = 2; // nc = 2 (closer to parents), nc = 5 (far from parents)
     if (u <= 0.5)
         beta = pow( 2*u, 1/(nc+1) );
     else
@@ -175,7 +190,22 @@ void Population::SBX(Individual *p1, Individual *p2, Individual *c1, Individual 
         c1->chromosome[i] = 0.5 * ( (1+beta)*p1->chromosome[i] + (1-beta)*p2->chromosome[i] );
         c2->chromosome[i] = 0.5 * ( (1-beta)*p1->chromosome[i] + (1+beta)*p2->chromosome[i] );
     }
+
+	/*
+	cout << "AFTER Xover: " << endl << "c1: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << c1->chromosome[i] << " ";
+    }
+    cout << endl;
+
+    cout << "c2: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << c2->chromosome[i] << " ";
+    }
+    cout << endl << endl;
+	*/
 }
+
 
 
 
@@ -202,6 +232,18 @@ void Population::XoverTwoPoint(Individual *p1, Individual *p2, Individual *c1, I
 }
 
 void Population::XoverUniform(Individual *p1, Individual *p2, Individual *c1, Individual *c2){
+	cout << "BEFORE Xover: " << endl << "p1: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << p1->chromosome[i] << " ";
+    }
+    cout << endl;
+
+    cout << "p2: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << p2->chromosome[i] << " ";
+    }
+    cout << endl;
+	
 	// Exchange all bits with equal probability
 	for(int i = 0; i < options.chromLength; i++){
 		if (Flip(0.5))
@@ -215,4 +257,16 @@ void Population::XoverUniform(Individual *p1, Individual *p2, Individual *c1, In
 			c2->chromosome[i] = p2->chromosome[i];
 		
 	}
+
+	cout << "AFTER Xover: " << endl << "c1: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << c1->chromosome[i] << " ";
+    }
+    cout << endl;
+
+    cout << "c2: ";
+    for(int i = 0; i < options.chromLength; i++){    
+        cout << c2->chromosome[i] << " ";
+    }
+    cout << endl << endl;
 }

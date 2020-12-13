@@ -20,6 +20,7 @@ Individual::~Individual() {
 }
 
 void Individual::Init(){
+	
 	chromosome[0] = IntInRange(1,20); // th_tree
 	chromosome[1] = DoubleInRange(0.0,1.0); // th_seed
 	chromosome[2] = DoubleInRange(0.0,1.0); // th_cr
@@ -42,7 +43,7 @@ void Individual::Mutate(float pm){
 			}
 		}
 	}
-	
+		
 	//std::cout << "AFTER Mutation: " << ToString() << std::endl;
 }
 

@@ -20,24 +20,29 @@ Individual::~Individual() {
 }
 
 void Individual::Init(){
+	
 	chromosome[0] = IntInRange(1,20); // th_tree
-	chromosome[1] = IntInRange(1,50); // tolerance
+	chromosome[1] = IntInRange(1,50); // tol
 	chromosome[2] = IntInRange(1,100); // ext
 	
 	//std::cout << "Init: " << ToString() << std::endl;
 }
 
 void Individual::Mutate(float pm){
+	
+	//std::cout << "BEFORE Mutation: " << ToString() << std::endl;
+	
 	for(int i = 0; i < chromLength; i++){
 		if(Flip(pm)){
 			switch (i){
 				case 0: chromosome[0] = IntInRange(1,20); break; // th_tree
-				case 1: chromosome[1] = IntInRange(1,50); break; // tolerance
+				case 1: chromosome[1] = IntInRange(1,50); break; // tol
 				case 2: chromosome[2] = IntInRange(1,100); break; // ext
 			}
 		}
 	}
-	//std::cout << "Mutation: " << ToString() << std::endl;
+		
+	//std::cout << "AFTER Mutation: " << ToString() << std::endl;
 }
 
 std::string Individual::ToString(){
