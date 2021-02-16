@@ -27,8 +27,8 @@ void GA::SetupOptions(int argc, char *argv[], int randomSeed){
 	options.popSize = 30;
 	options.chromLength = 4;
 	options.maxgens = 10;
-	options.px = 0.95f;
-	options.pm = 0.05f;
+	options.px = 1.00f;
+	options.pm = 1.00f;
 	options.infile = std::string ("infile");
 	options.outfile = std::string("outfile");
 	//options.graphInfile = std::string("graph-raw.csv");

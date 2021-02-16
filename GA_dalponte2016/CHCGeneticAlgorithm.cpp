@@ -12,21 +12,22 @@ int main(int argc, char * argv[])
 {
 	int low = 1;
 	int high = 1000;
-
+	int runs = 5;
+	int randomSeed;
 	srand(time(NULL));
-	int randomSeed = IntInRange(low, high);
-
-	cout << "CHC genetic algorithm: " << argv[0] << endl;
+	
+	//cout << "CHC genetic algorithm: " << argv[0] << endl;
 	cout << "Algorithm: dalponte2016()" << endl;
 	cout << "Chromosome: [th_tree, th_seed, th_cr, max_cr]" << endl << endl; 
 
-	int runs = 5;
-	GA ga(argc, argv, randomSeed);
-
 	for (int i = 0; i < runs; i++)
 	{
-		ga.Init();
-		ga.CHCRun();
+		cout << "RUN " << i << endl;
+		//randomSeed = IntInRange(low, high);
+		//GA ga(argc, argv, randomSeed);
+
+		//ga.Init();
+		//ga.CHCRun();
 	}
 	return 0;
 }

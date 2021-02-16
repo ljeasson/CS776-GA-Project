@@ -65,7 +65,7 @@ double Eval(Individual *individual){
 	int sum = 0;
 	
 	// Append chromosome genes as Rscript command line arguments
-	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/treeSeg_watershed.R ";
+	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/treeSeg_watershed_hillclimb.R ";
 	cout << "Chromosome: ";
 	for(int i = 0; i < individual->chromLength; i++){
 		cout << individual->chromosome[i] << " ";

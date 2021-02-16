@@ -4,9 +4,7 @@ import math
 import sys
 
 
-
-def main(alg, outfile, ls, parameters):
-
+def performance_graph(alg, outfile):
     # PERFORMANCE GRAPHS ========================================================================
     # Read outfile
     fr = open(outfile, "r")
@@ -62,8 +60,9 @@ def main(alg, outfile, ls, parameters):
     plt.draw()
     plt.waitforbuttonpress(0)
     plt.close()
-    
-    
+
+
+def get_overlaps(alg, ls):
     # WORST, AVERAGE, MAX OVERLAP ===============================================================
     # Read overlap file
     fr = open(ls, "r")
@@ -132,6 +131,7 @@ def main(alg, outfile, ls, parameters):
     OVERLAPS['TLS_0121'].append([ls_121_vals[0], ls_121_vals[1], ls_121_vals[2]])
 
     
+def rankings(alg, parameters):
     # GA PARAMETER RANKINGS =====================================================================
     # Read parameters file
     fr = open(parameters, "r")
@@ -142,20 +142,22 @@ def main(alg, outfile, ls, parameters):
     for i in range(0,len(lines)-1,3):
         parameters = lines[i].split("\t")
         fitness = float(lines[i+1])
-        
-        graph_parameters[fitness] = graph_parameters.get(fitness, parameters)
+        graph_parameters[tuple(parameters)] = fitness
 
-    collabel=("Fitness", "Parameters")
+    graph_parameters = dict(sorted(graph_parameters.items(), key=lambda item: item[1], reverse=True))
+
+
+    collabel=("Parameters", "Fitness")
     rowlabel=(" 1 "," 2 "," 3 "," 4 "," 5 ")
     plt.axis('tight')
     plt.axis('off')
     plt.title(str(alg) + '\nParameter Rankings')
 
         
-    the_table = plt.table(cellText=list(sorted(graph_parameters.items(), reverse=True))[0:5], 
+    the_table = plt.table(cellText=list(graph_parameters.items())[0:5], 
                             rowLabels=rowlabel,
                             colLabels=collabel, 
-                            colWidths=[0.1, 0.4], 
+                            colWidths=[0.3, 0.1], 
                             loc='center')
     the_table.set_fontsize(20)
     the_table.scale(2, 2)
@@ -163,7 +165,6 @@ def main(alg, outfile, ls, parameters):
     plt.draw()
     plt.waitforbuttonpress(0)
     plt.close()
-
 
 
 def overlap_graph(plot):
@@ -195,21 +196,24 @@ def overlap_graph(plot):
 if __name__ == "__main__":
     OVERLAPS = {"TLS_0001": [], "TLS_0002": [], "TLS_0017": [], "TLS_0022": [], "TLS_0026": [], "TLS_0121": []}
         
-    main("dalponte2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/outfile",
-        "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/ls.txt",
-        "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/parameters.txt")
+    performance_graph("dalponte2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/outfile")
+    get_overlaps("dalponte2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/ls.txt")
+    rankings("dalponte2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/parameters.txt")
         
-    #main("li2012", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/outfile",
-    #    "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/ls.txt",
-    #    "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/parameters.txt")
+    performance_graph("li2012", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/outfile")
+    get_overlaps("li2012", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/ls.txt")
+    rankings("li2012", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/parameters.txt")
 
-    main("silva2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/outfile",
-        "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/ls.txt",
-        "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/parameters.txt")
+    performance_graph("silva2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/outfile")
+    get_overlaps("silva2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/ls.txt")
+    rankings("silva2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/parameters.txt")
 
-    main("watershed", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/outfile",
-        "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/ls.txt",
-        "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/parameters.txt")
+    performance_graph("watershed", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/outfile")
+    get_overlaps("watershed", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/ls.txt")
+    rankings("watershed", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/parameters.txt")
+
+    rankings("silva2016_exhaustive", "C:/Users/Lee/Desktop/CS776-GA-Project/silva_parameters.txt")
+    rankings("watershed_exhaustive", "C:/Users/Lee/Desktop/CS776-GA-Project/watershed_parameters.txt")
 
     for key, value in OVERLAPS.items():
         overlap_graph(key)    
