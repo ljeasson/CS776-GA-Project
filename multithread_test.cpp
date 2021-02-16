@@ -38,7 +38,6 @@ void runExe(LPCTSTR lpApplicationName)  {
     CloseHandle( pi.hThread );
 }
  
-
 int main(int argc, char* argv[]) {
     vector<string> filepaths = {
         "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/ga.exe",
@@ -50,7 +49,8 @@ int main(int argc, char* argv[]) {
  
     for (int i = 0; i < filepaths.size(); i++) {
         //threads.push_back(thread(runExe, filepaths[i].c_str()));
-        
+        cout << "Running on thread " << i << " : " << filepaths[i] << endl;
+
         // Startup information
         STARTUPINFO si;  
         ZeroMemory( &si, sizeof(si) );
@@ -77,6 +77,7 @@ int main(int argc, char* argv[]) {
         // Close process and thread handles. 
         CloseHandle( pi.hProcess );
         CloseHandle( pi.hThread );
+        
     }
 
     //for (auto &th : threads) {th.join();}
