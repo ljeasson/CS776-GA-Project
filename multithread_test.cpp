@@ -40,12 +40,12 @@ void runExe(LPCTSTR lpApplicationName)  {
  
 int main(int argc, char* argv[]) {
     vector<string> filepaths = {
-        "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/ga.exe",
+        "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/ga.exe"
         "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/ga.exe",
         "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/ga.exe",
         "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/ga.exe",
     };
-    //vector<thread> threads;
+    vector<thread> threads;
  
     for (int i = 0; i < filepaths.size(); i++) {
         //threads.push_back(thread(runExe, filepaths[i].c_str()));

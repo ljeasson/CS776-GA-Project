@@ -16,6 +16,10 @@
 
 #include <string>
 #include <vector>
+#include <thread>
+#include <future>
+
+#include <unistd.h>
 
 using namespace std;
 
@@ -36,8 +40,7 @@ string exec(const char* cmd) {
     return result;
 }
 
-vector<double> split(const string& str, const string& delim)
-{
+vector<double> split(const string& str, const string& delim){
     vector<string> tokens;
 	vector<double> token_nums;
     size_t prev = 0, pos = 0;
@@ -61,12 +64,23 @@ vector<double> split(const string& str, const string& delim)
 
 double Eval(Individual *individual){
 	
+	unsigned int microseconds = 600000;
+	double fitness = 0;
+
+	for(int i = 0; i < individual->chromLength; i++){
+		fitness += individual->chromosome[i];
+	}
+	usleep(microseconds);
+	return fitness;
+
+
+	/*
 	double fitness = 0;
 	int sum = 0;
 	
 	// Append chromosome genes as Rscript command line arguments
 	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/treeSeg_dalponte2016.R ";
-	cout << "Chromosome: ";
+	//cout << "Chromosome: ";
 	for(int i = 0; i < individual->chromLength; i++){
 		cout << individual->chromosome[i] << " ";
 		if (i == 1 || i == 2)
@@ -77,7 +91,7 @@ double Eval(Individual *individual){
 
 		//fitness += individual->chromosome[i];
 	}
-	cout << endl << command << endl << endl;
+	//cout << endl << command << endl << endl;
 
 
 	// Call Rscript to run tree segmentation with parameters
@@ -104,4 +118,5 @@ double Eval(Individual *individual){
 	cout << printbuf << endl;	
 
 	return fitness;
+	*/
 }

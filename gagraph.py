@@ -197,23 +197,25 @@ if __name__ == "__main__":
     OVERLAPS = {"TLS_0001": [], "TLS_0002": [], "TLS_0017": [], "TLS_0022": [], "TLS_0026": [], "TLS_0121": []}
         
     performance_graph("dalponte2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/outfile")
-    get_overlaps("dalponte2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/ls.txt")
-    rankings("dalponte2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/parameters.txt")
+    #get_overlaps("dalponte2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/ls.txt")
+    #rankings("dalponte2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/parameters.txt")
         
     performance_graph("li2012", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/outfile")
-    get_overlaps("li2012", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/ls.txt")
-    rankings("li2012", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/parameters.txt")
+    #get_overlaps("li2012", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/ls.txt")
+    #rankings("li2012", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/parameters.txt")
 
     performance_graph("silva2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/outfile")
-    get_overlaps("silva2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/ls.txt")
-    rankings("silva2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/parameters.txt")
+    #get_overlaps("silva2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/ls.txt")
+    #rankings("silva2016", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_silva2016/parameters.txt")
 
     performance_graph("watershed", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/outfile")
-    get_overlaps("watershed", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/ls.txt")
-    rankings("watershed", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/parameters.txt")
+    #get_overlaps("watershed", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/ls.txt")
+    #rankings("watershed", "C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/parameters.txt")
 
-    rankings("silva2016_exhaustive", "C:/Users/Lee/Desktop/CS776-GA-Project/silva_parameters.txt")
-    rankings("watershed_exhaustive", "C:/Users/Lee/Desktop/CS776-GA-Project/watershed_parameters.txt")
+    #rankings("silva2016_exhaustive", "C:/Users/Lee/Desktop/CS776-GA-Project/silva_parameters.txt")
+    #rankings("watershed_exhaustive", "C:/Users/Lee/Desktop/CS776-GA-Project/watershed_parameters.txt")
 
+    '''
     for key, value in OVERLAPS.items():
         overlap_graph(key)    
+    '''

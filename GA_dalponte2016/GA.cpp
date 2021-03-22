@@ -12,6 +12,8 @@
 #include <string>
 #include <iostream>
 
+using namespace std;
+
 GA::GA(int argc, char *argv[], int randomSeed) {
 	SetupOptions(argc, argv, randomSeed);
 	InitializeRandomNumberGenerator(options.randomSeed);
@@ -24,11 +26,11 @@ GA::~GA() {
 
 void GA::SetupOptions(int argc, char *argv[], int randomSeed){
 	options.randomSeed = randomSeed;
-	options.popSize = 30;
+	options.popSize = 60;
 	options.chromLength = 4;
-	options.maxgens = 10;
-	options.px = 1.00f;
-	options.pm = 1.00f;
+	options.maxgens = 20;
+	options.px = 0.95f;
+	options.pm = 0.05f;
 	options.infile = std::string ("infile");
 	options.outfile = std::string("outfile");
 	//options.graphInfile = std::string("graph-raw.csv");
@@ -44,7 +46,7 @@ void GA::Init(){
 
 }
 
-void GA::Run(){
+void GA::Run(){	
 	for (unsigned long int i = 1; i < options.maxgens; i++) {
 		parent->Generation(child);
 		child->Evaluate();

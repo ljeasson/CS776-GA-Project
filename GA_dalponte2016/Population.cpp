@@ -12,6 +12,10 @@
 #include <iostream>
 #include <cstring>
 
+#include <vector>
+#include <thread>
+#include <future>
+
 using namespace std;
 
 Population::Population(Options opts) {
@@ -33,9 +37,20 @@ void Population::Init(){
 }
 
 void Population::Evaluate(){
+	
+	// WORKS!!!
+	for (int i = 0; i < options.popSize; i++){
+		future<double> ret = async(launch::async, Eval, members[i]);
+		//cout << "Fitness "<< i << ": " << ret.get() << endl << endl;
+		members[i]->fitness = ret.get();
+	}
+	
+	/*
+	// WORKS, default
 	for (int i = 0; i < options.popSize; i++){
 		members[i]->fitness = Eval(members[i]);
 	}
+	*/
 }
 
 void Population::Statistics(){
