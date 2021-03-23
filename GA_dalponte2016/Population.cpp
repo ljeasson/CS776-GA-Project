@@ -37,20 +37,18 @@ void Population::Init(){
 }
 
 void Population::Evaluate(){
-	
+	/*
 	// WORKS!!!
 	for (int i = 0; i < options.popSize; i++){
 		future<double> ret = async(launch::async, Eval, members[i]);
-		//cout << "Fitness "<< i << ": " << ret.get() << endl << endl;
 		members[i]->fitness = ret.get();
 	}
-	
-	/*
+	*/
+
 	// WORKS, default
 	for (int i = 0; i < options.popSize; i++){
-		members[i]->fitness = Eval(members[i]);
+		members[i]->fitness = Eval(members[i], options);
 	}
-	*/
 }
 
 void Population::Statistics(){
@@ -125,7 +123,7 @@ int compareFitness(const void *x, const void *y) {
 
 void Population::halve(Population*child) {
   for (int i = options.popSize; i < 2 * options.popSize; i++){
-    members[i]->fitness = Eval(members[i]);
+    members[i]->fitness = Eval(members[i], options);
   }
   //std::cout << "Intermediate\n";
   //std::cout << ToString(options.popSize, options.popSize * 2);

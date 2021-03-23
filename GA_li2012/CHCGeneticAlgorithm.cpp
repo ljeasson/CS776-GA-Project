@@ -12,7 +12,7 @@
 using namespace std;
 
 void runGA(int i, int argc, char * argv[], int randomSeed){
-	cout << "RUN on thread " << i << endl;
+	//cout << "RUN on thread " << i << endl;
 	GA ga(argc, argv, randomSeed);
 	ga.Init();
 	ga.CHCRun();
@@ -34,7 +34,7 @@ int main(int argc, char * argv[])
 	for (int i = 0; i < runs; i++)
 	{
 		randomSeed = IntInRange(low, high);
-		threads.emplace_back(thread(runGA, i, argc, argv, randomSeed));
+		threads.push_back(thread(runGA, i, argc, argv, randomSeed));
 	}
 	for (auto &th : threads) th.join();
 	return 0;

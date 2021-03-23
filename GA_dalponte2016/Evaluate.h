@@ -11,7 +11,7 @@
 #include "Individual.h"
 #include "Options.h"
 
-double Eval(Individual *individual);
+double Eval(Individual *individual, Options options);
 
 //void EvalInit(Options options);
 

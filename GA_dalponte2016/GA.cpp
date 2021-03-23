@@ -26,13 +26,15 @@ GA::~GA() {
 
 void GA::SetupOptions(int argc, char *argv[], int randomSeed){
 	options.randomSeed = randomSeed;
-	options.popSize = 60;
+	options.popSize = 30;
 	options.chromLength = 4;
-	options.maxgens = 20;
+	options.maxgens = 10;
 	options.px = 0.95f;
 	options.pm = 0.05f;
 	options.infile = std::string ("infile");
 	options.outfile = std::string("outfile");
+	options.lsfile = std::string("ls");
+	options.parametersfile = std::string("parameters");
 	//options.graphInfile = std::string("graph-raw.csv");
 }
 

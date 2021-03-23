@@ -286,7 +286,7 @@ cat("ls_121: ", ls_121_vals, "\n")
 
 
 ls_str <- paste(c(ls_001_vals,"\n",ls_002_vals,"\n",ls_017_vals,"\n",ls_022_vals,"\n",ls_026_vals,"\n", ls_121_vals,"\n"), collapse=" ")
-cat(ls_str, file="C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/ls.txt", sep="\n", append=TRUE)
+cat(ls_str, file="C:/Users/Lee/Desktop/TreeSegGA/GA_dalponte2016/ls.txt", sep="\n", append=TRUE)
 #writeLines(ls_str, ls_file)
 
 

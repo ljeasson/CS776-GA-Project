@@ -34,7 +34,6 @@ int main(int argc, char * argv[])
 	for (int i = 0; i < runs; i++)
 	{
 		randomSeed = IntInRange(low, high);
-		//cout << "Seed " << i << ": " << randomSeed << endl;
 		threads.push_back(thread(runGA, i, argc, argv, randomSeed));
 	}
 	for (auto &th : threads) th.join();

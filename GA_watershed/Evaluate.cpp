@@ -59,7 +59,7 @@ vector<double> split(const string& str, const string& delim)
     return token_nums;
 }
 
-double Eval(Individual *individual){
+double Eval(Individual *individual, Options options){
 	
 	double fitness = 0;
 	int sum = 0;
@@ -97,7 +97,8 @@ double Eval(Individual *individual){
 
 	char printbuf[1024];
 	sprintf(printbuf, "%d\t%d\t%d \n%f\n\n", abs((int)individual->chromosome[0]), abs((int)individual->chromosome[1]), abs((int)individual->chromosome[2]), fitness);
-	WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/parameters.txt"));
+	WriteBufToFile(string(printbuf), options.parametersfile);
+	//WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_watershed/parameters.txt"));
 	cout << printbuf << endl;	
 
 	return fitness;

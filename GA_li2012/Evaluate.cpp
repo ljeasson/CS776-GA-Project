@@ -16,6 +16,10 @@
 
 #include <string>
 #include <vector>
+#include <thread>
+#include <future>
+
+#include <unistd.h>
 
 using namespace std;
 
@@ -59,7 +63,7 @@ vector<double> split(const string& str, const string& delim)
     return token_nums;
 }
 
-double Eval(Individual *individual){
+double Eval(Individual *individual, Options options){
 	
 	double fitness = 0;
 	int sum = 0;
@@ -101,7 +105,8 @@ double Eval(Individual *individual){
 	char printbuf[1024];
 	sprintf(printbuf, "%f\t%f\t%d\t%d\t%d\t%d\n%f\n\n", abs(round(individual->chromosome[0]/0.5) * 0.5 ), abs(round(individual->chromosome[1]/0.5) * 0.5 ) , 
 			abs((int)individual->chromosome[2]), abs((int)individual->chromosome[3]), abs((int)individual->chromosome[4]), abs((int)individual->chromosome[5]), fitness);
-	WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/parameters.txt"));
+	WriteBufToFile(string(printbuf), options.parametersfile);
+	//WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_li2012/parameters.txt"));
 	cout << printbuf << endl;	
 
 	return fitness;

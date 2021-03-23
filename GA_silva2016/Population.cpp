@@ -33,8 +33,17 @@ void Population::Init(){
 }
 
 void Population::Evaluate(){
+	/*
+	// WORKS!!!
 	for (int i = 0; i < options.popSize; i++){
-		members[i]->fitness = Eval(members[i]);
+		future<double> ret = async(launch::async, Eval, members[i]);
+		members[i]->fitness = ret.get();
+	}
+	*/
+
+	// WORKS, default
+	for (int i = 0; i < options.popSize; i++){
+		members[i]->fitness = Eval(members[i], options);
 	}
 }
 

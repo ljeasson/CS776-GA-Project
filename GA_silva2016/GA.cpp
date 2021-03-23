@@ -31,6 +31,8 @@ void GA::SetupOptions(int argc, char *argv[], int randomSeed){
 	options.pm = 1.00f;
 	options.infile = std::string ("infile");
 	options.outfile = std::string("outfile");
+	options.lsfile = std::string("ls");
+	options.parametersfile = std::string("parameters");
 	//options.graphInfile = std::string("graph-raw.csv");
 }
 

@@ -62,24 +62,26 @@ vector<double> split(const string& str, const string& delim){
     return token_nums;
 }
 
-double Eval(Individual *individual){
+double Eval(Individual *individual, Options options){
 	
-	unsigned int microseconds = 600000;
+	/*
+	//unsigned int microseconds = 600000;
 	double fitness = 0;
 
 	for(int i = 0; i < individual->chromLength; i++){
 		fitness += individual->chromosome[i];
 	}
-	usleep(microseconds);
+	//usleep(microseconds);
 	return fitness;
+	*/
 
 
-	/*
 	double fitness = 0;
 	int sum = 0;
 	
 	// Append chromosome genes as Rscript command line arguments
-	string command = "Rscript.exe C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/treeSeg_dalponte2016.R ";
+	string command = "Rscript.exe ../GA_dalponte2016/treeSeg_dalponte2016.R ";
+	//string command = "singularity exec rscript.sif /data/gpfs/home/leasson/GA_dalponte2016/treeSeg_dalponte2016.R ";
 	//cout << "Chromosome: ";
 	for(int i = 0; i < individual->chromLength; i++){
 		cout << individual->chromosome[i] << " ";
@@ -89,7 +91,6 @@ double Eval(Individual *individual){
 			command.append(to_string(abs((int)individual->chromosome[i])));
 		command.append(" ");
 
-		//fitness += individual->chromosome[i];
 	}
 	//cout << endl << command << endl << endl;
 
@@ -114,9 +115,10 @@ double Eval(Individual *individual){
 
 	char printbuf[1024];
 	sprintf(printbuf, "%d\t%f\t%f\t%d\n%f\n\n", abs((int)individual->chromosome[0]), abs(round(individual->chromosome[1]/0.05) * 0.05) , abs(round(individual->chromosome[2]/0.05) * 0.05), abs((int)individual->chromosome[3]), fitness);
-	WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/CS776-GA-Project/GA_dalponte2016/parameters.txt"));
+	WriteBufToFile(string(printbuf), options.parametersfile);
+	//WriteBufToFile(string(printbuf), string("C:/Users/Lee/Desktop/TreeSegGA/GA_dalponte2016/parameters.txt"));
 	cout << printbuf << endl;	
 
 	return fitness;
-	*/
+	
 }

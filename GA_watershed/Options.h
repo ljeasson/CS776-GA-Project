@@ -13,6 +13,8 @@
 typedef struct {
 	std::string infile;
 	std::string outfile;
+	std::string lsfile;
+	std::string parametersfile;
 
 	//std::string graphInfile;
 
