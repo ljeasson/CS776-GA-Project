@@ -13,6 +13,8 @@
 #include<Individual.h>
 
 #include <string>
+#include <vector>
+#include <thread>
 
 class Population {
 public:

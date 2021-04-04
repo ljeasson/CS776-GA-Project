@@ -17,11 +17,13 @@
 #include <string>
 #include <vector>
 #include <thread>
+#include <mutex>
 #include <future>
 
 #include <unistd.h>
 
 using namespace std;
+
 
 string exec(const char* cmd) {
     char buffer[128];
@@ -62,29 +64,28 @@ vector<double> split(const string& str, const string& delim){
     return token_nums;
 }
 
+
 double Eval(Individual *individual, Options options){
-	
+		
 	/*
 	//unsigned int microseconds = 600000;
+	//usleep(microseconds);
 	double fitness = 0;
-
-	for(int i = 0; i < individual->chromLength; i++){
+	for (int i = 0; i < individual->chromLength; i++){
 		fitness += individual->chromosome[i];
 	}
-	//usleep(microseconds);
 	return fitness;
 	*/
-
 
 	double fitness = 0;
 	int sum = 0;
 	
 	// Append chromosome genes as Rscript command line arguments
-	string command = "Rscript.exe ../GA_dalponte2016/treeSeg_dalponte2016.R ";
-	//string command = "singularity exec rscript.sif /data/gpfs/home/leasson/GA_dalponte2016/treeSeg_dalponte2016.R ";
+	//string command = "Rscript.exe ../GA_dalponte2016/treeSeg_dalponte2016.R ";
+	string command = "singularity exec /data/gpfs/home/leasson/rscript.sif Rscript /data/gpfs/home/leasson/GA_dalponte2016/treeSeg_dalponte2016.R ";
 	//cout << "Chromosome: ";
 	for(int i = 0; i < individual->chromLength; i++){
-		cout << individual->chromosome[i] << " ";
+		//cout << individual->chromosome[i] << " ";
 		if (i == 1 || i == 2)
 			command.append(to_string(abs(round(individual->chromosome[i]/0.05) * 0.05 )));
 		else

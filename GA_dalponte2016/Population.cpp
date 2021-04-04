@@ -16,6 +16,8 @@
 #include <thread>
 #include <future>
 
+#include <unistd.h>
+
 using namespace std;
 
 Population::Population(Options opts) {
@@ -37,18 +39,19 @@ void Population::Init(){
 }
 
 void Population::Evaluate(){
-	/*
-	// WORKS!!!
+	
+	// WORKS, asynchronous
 	for (int i = 0; i < options.popSize; i++){
-		future<double> ret = async(launch::async, Eval, members[i]);
+		future<double> ret = async(launch::async, Eval, members[i], options);
 		members[i]->fitness = ret.get();
 	}
-	*/
-
+	
+	/*
 	// WORKS, default
 	for (int i = 0; i < options.popSize; i++){
 		members[i]->fitness = Eval(members[i], options);
 	}
+	*/
 }
 
 void Population::Statistics(){

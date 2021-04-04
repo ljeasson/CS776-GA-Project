@@ -9,10 +9,11 @@
 
 #include <unistd.h>
 
+
 using namespace std;
 
 void runGA(int i, int argc, char * argv[], int randomSeed){
-	//cout << "RUN on thread " << i << endl;
+	//cout << "RUN on thread " << i << endl;	
 	GA ga(argc, argv, randomSeed);
 	ga.Init();
 	ga.CHCRun();
