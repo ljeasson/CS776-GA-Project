@@ -1,9 +1,3 @@
 not gonna show up in console
-Joining, by = "treeID"
-Joining, by = "treeID"
-
-Execution halted
-D"
-Joining, by = "treeID"
-
+Error in library(lidR) : there is no package called ‘lidR’
 Execution halted

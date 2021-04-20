@@ -2,14 +2,19 @@
 # Call this function per eval()
 # CHROMOSOME: [th_tree, th_seed, th_cr, max_cr]
 
-options(warn=-1)
-options("rgdal_show_exportToProj4_warnings"="none")
+#options(warn=-1)
+#options("rgdal_show_exportToProj4_warnings"="none")
 
 # Open a file to send messages to
-zz <- file("messages.Rout", open = "wt")
+#zz <- file("messages.Rout", open = "wt")
 # Divert messages to that file
-sink(zz, type = "message")
-message("not gonna show up in console")
+#sink(zz, type = "message")
+#message("not gonna show up in console")
+
+#install.packages("lidR")
+#install.packages("rgal")
+#install.packages("raster")
+#install.packages("sf")
 
 suppressWarnings(suppressMessages(library(lidR)))
 suppressWarnings(suppressMessages(library(rgdal)))
@@ -34,8 +39,7 @@ SEGMENT <- function(las, ground_truths, vals)
   ker = matrix(1,3,3)
   CHM = focal(CHM, w = ker, fun = median)
   CHM = focal(CHM, w = ker, fun = median)
-  
-  
+
   #dalponte2016(
   #  chm,  [grid_canopy() or read external file]
   #  treetops,  [find_trees() or read shp file]

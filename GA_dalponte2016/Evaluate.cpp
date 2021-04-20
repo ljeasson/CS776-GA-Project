@@ -82,7 +82,10 @@ double Eval(Individual *individual, Options options){
 	
 	// Append chromosome genes as Rscript command line arguments
 	//string command = "Rscript.exe ../GA_dalponte2016/treeSeg_dalponte2016.R ";
-	string command = "singularity exec /data/gpfs/home/leasson/rscript.sif Rscript /data/gpfs/home/leasson/GA_dalponte2016/treeSeg_dalponte2016.R ";
+	
+	//string command = "singularity exec /home/ljeasson/rscript.sif Rscript /home/ljeasson/TreeSegGA/GA_dalponte2016/treeSeg_dalponte2016.R ";
+	string command = "singularity exec /home/ljeasson/rscript.sif Rscript /home/ljeasson/TreeSegGA/GA_dalponte2016/test.R ";
+	
 	//cout << "Chromosome: ";
 	for(int i = 0; i < individual->chromLength; i++){
 		//cout << individual->chromosome[i] << " ";
